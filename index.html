@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Meta Ads: підготовка Остапа</title>
+<meta name="description" content="Тренажер до технічної співбесіди на Account Manager (Meta Ads): словник, формули, кабінет, кейси, тести й картки.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%98%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: Notion-style workspace — fixed left sidebar with page tree, topbar with breadcrumb, centered 760px page column, side "peek" panel for database rows */
+:root{
+  --bg:#ffffff; --side:#f7f7f5; --fg:#37352f; --muted:#787774; --faint:#a5a29c; --line:#e9e9e7; --hover:rgba(55,53,47,.06); --active:rgba(55,53,47,.09);
+  --accent:#2383e2; --accent-bg:#e7f2fb; --on-accent:#ffffff;
+  --t-gray:#787774; --t-gray-bg:#f1f1ef; --t-brown:#9f6b53; --t-brown-bg:#f4eeee; --t-orange:#d9730d; --t-orange-bg:#fbecdd;
+  --t-yellow:#cb912f; --t-yellow-bg:#fbf3db; --t-green:#448361; --t-green-bg:#edf3ec; --t-blue:#337ea9; --t-blue-bg:#e7f3f8;
+  --t-purple:#9065b0; --t-purple-bg:#f6f3f9; --t-pink:#c14c8a; --t-pink-bg:#faf1f5; --t-red:#d44c47; --t-red-bg:#fdebec;
+  --shadow:0 0 0 1px rgba(15,15,15,.05),0 3px 6px rgba(15,15,15,.1),0 9px 24px rgba(15,15,15,.2);
+  --f-body:"Inter",ui-sans-serif,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#191919; --side:#202020; --fg:#d4d4d4; --muted:#9b9b9b; --faint:#6f6f6f; --line:#2f2f2f; --hover:rgba(255,255,255,.055); --active:rgba(255,255,255,.09);
+  --accent:#529cca; --accent-bg:#1f2f3c; --on-accent:#0f1316;
+  --t-gray:#9b9b9b; --t-gray-bg:#2f2f2f; --t-brown:#ba856f; --t-brown-bg:#4a3228; --t-orange:#c77d48; --t-orange-bg:#5c3b23;
+  --t-yellow:#ca9849; --t-yellow-bg:#564328; --t-green:#529e72; --t-green-bg:#243d30; --t-blue:#5e87c9; --t-blue-bg:#143a4e;
+  --t-purple:#9d68d3; --t-purple-bg:#3c2d49; --t-pink:#d15796; --t-pink-bg:#4e2c3c; --t-red:#df5452; --t-red-bg:#522e2a;
+  --shadow:0 0 0 1px rgba(255,255,255,.07),0 3px 6px rgba(0,0,0,.3),0 9px 24px rgba(0,0,0,.45);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#191919; --side:#202020; --fg:#d4d4d4; --muted:#9b9b9b; --faint:#6f6f6f; --line:#2f2f2f; --hover:rgba(255,255,255,.055); --active:rgba(255,255,255,.09);
+  --accent:#529cca; --accent-bg:#1f2f3c; --on-accent:#0f1316;
+  --t-gray:#9b9b9b; --t-gray-bg:#2f2f2f; --t-brown:#ba856f; --t-brown-bg:#4a3228; --t-orange:#c77d48; --t-orange-bg:#5c3b23;
+  --t-yellow:#ca9849; --t-yellow-bg:#564328; --t-green:#529e72; --t-green-bg:#243d30; --t-blue:#5e87c9; --t-blue-bg:#143a4e;
+  --t-purple:#9d68d3; --t-purple-bg:#3c2d49; --t-pink:#d15796; --t-pink-bg:#4e2c3c; --t-red:#df5452; --t-red-bg:#522e2a;
+  --shadow:0 0 0 1px rgba(255,255,255,.07),0 3px 6px rgba(0,0,0,.3),0 9px 24px rgba(0,0,0,.45);
+  color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+a{color:inherit;text-decoration:underline;text-decoration-color:var(--faint);text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-radius:4px}
+
+/* ---------- app shell ---------- */
+.app{display:flex;min-height:100%}
+.side{position:fixed;inset:0 auto 0 0;width:260px;background:var(--side);border-right:1px solid var(--line);display:flex;flex-direction:column;z-index:30;padding-top:env(safe-area-inset-top,0px);transition:transform .2s ease}
+.ws{display:flex;align-items:center;gap:8px;padding:12px 14px 6px;font-weight:600;font-size:14px}
+.ws .av{width:22px;height:22px;border-radius:4px;background:var(--t-blue-bg);color:var(--t-blue);display:grid;place-items:center;font-size:12px;font-weight:700}
+.ws small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.side-btn{display:flex;align-items:center;gap:8px;width:calc(100% - 12px);margin:0 6px;padding:5px 10px;border:0;background:transparent;border-radius:6px;text-align:left;font-size:14px;color:var(--muted);cursor:pointer}
+.side-btn:hover{background:var(--hover)}
+.side-btn kbd{margin-left:auto;font-family:var(--f-body);font-size:11px;color:var(--faint)}
+.side-scroll{overflow-y:auto;flex:1;padding:6px 0 16px}
+.grp{font-size:12px;font-weight:600;color:var(--faint);padding:14px 16px 4px}
+.pg{display:flex;align-items:center;gap:8px;width:calc(100% - 12px);margin:0 6px;padding:4px 10px;border:0;background:transparent;border-radius:6px;text-align:left;font-size:14px;cursor:pointer;color:var(--fg)}
+.pg:hover{background:var(--hover)}
+.pg[aria-current="page"]{background:var(--active);font-weight:600}
+.pg .ic{width:20px;text-align:center;flex:0 0 auto}
+.pg .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pg .dn{font-size:11px;color:var(--t-green);flex:0 0 auto}
+.side-foot{border-top:1px solid var(--line);padding:10px 14px 14px;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+.meter{height:4px;background:var(--line);border-radius:4px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--t-green);width:0;transition:width .3s}
+.scrim{display:none}
+.mainc{flex:1;min-width:0;margin-left:260px}
+.top{position:sticky;top:0;z-index:20;background:var(--bg);display:flex;align-items:center;gap:6px;height:46px;padding:0 12px;padding-top:env(safe-area-inset-top,0px);box-sizing:content-box}
+.top .crumb{display:flex;align-items:center;gap:4px;font-size:14px;color:var(--fg);min-width:0}
+.top .crumb span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .crumb .sep{color:var(--faint)}
+.top .sp{flex:1}
+.ibtn{border:0;background:transparent;border-radius:6px;padding:4px 8px;cursor:pointer;font-size:14px;color:var(--muted);display:inline-flex;align-items:center;gap:6px;height:30px}
+.ibtn:hover{background:var(--hover)}
+#menuBtn{display:none}
+.page{max-width:760px;margin:0 auto;padding-inline:max(16px,4vw);padding-block:28px 120px}
+@media (max-width:900px){
+  .side{transform:translateX(-100%);box-shadow:var(--shadow)}
+  body.nav-open .side{transform:none}
+  body.nav-open .scrim{display:block;position:fixed;inset:0;background:rgba(15,15,15,.35);z-index:25}
+  .mainc{margin-left:0}
+  #menuBtn{display:inline-flex}
+}
+
+/* ---------- page header ---------- */
+.p-icon{font-size:64px;line-height:1;margin-bottom:8px}
+.p-title{font-size:clamp(28px,5vw,40px);font-weight:700;line-height:1.2;margin:0 0 10px;letter-spacing:-.01em;text-wrap:balance}
+.props{display:flex;flex-direction:column;gap:2px;margin:6px 0 18px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.prop{display:flex;gap:8px;align-items:center;font-size:14px;min-height:30px}
+.prop .k{width:140px;flex:0 0 auto;color:var(--muted);display:flex;gap:6px;align-items:center}
+.prop .v{min-width:0;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.donebtn{border:1px solid var(--line);background:transparent;border-radius:6px;padding:2px 10px;font-size:13px;cursor:pointer;color:var(--muted)}
+.donebtn[aria-pressed="true"]{background:var(--t-green-bg);color:var(--t-green);border-color:transparent}
+
+/* ---------- blocks ---------- */
+.blocks{display:flex;flex-direction:column;gap:6px}
+.blocks>*{margin:0}
+h2.b{font-size:24px;font-weight:600;margin:22px 0 4px;line-height:1.3}
+h3.b{font-size:19px;font-weight:600;margin:14px 0 2px;line-height:1.35}
+p{margin:0;max-width:70ch}
+.muted{color:var(--muted)}
+.lead{color:var(--muted)}
+ul,ol{margin:0;padding-left:24px;display:flex;flex-direction:column;gap:3px}
+li::marker{color:var(--fg)}
+hr{border:0;border-top:1px solid var(--line);margin:10px 0;width:100%}
+code,.mono{font-family:var(--f-mono);font-size:.87em}
+code{background:var(--t-gray-bg);color:var(--t-red);padding:1px 5px;border-radius:4px}
+.callout{display:flex;gap:10px;padding:14px 16px;border-radius:6px;background:var(--t-gray-bg);font-size:15px}
+.callout .ci{font-size:20px;line-height:1.3;flex:0 0 auto}
+.callout>div{min-width:0;display:flex;flex-direction:column;gap:6px}
+.callout.blue{background:var(--t-blue-bg)} .callout.yellow{background:var(--t-yellow-bg)} .callout.green{background:var(--t-green-bg)} .callout.red{background:var(--t-red-bg)} .callout.purple{background:var(--t-purple-bg)}
+.quote{border-left:3px solid var(--fg);padding:2px 0 2px 14px;font-size:17px}
+.tag{display:inline-flex;align-items:center;font-size:12.5px;line-height:1.5;padding:0 7px;border-radius:4px;background:var(--t-gray-bg);color:var(--fg);white-space:nowrap}
+.tag.blue{background:var(--t-blue-bg)} .tag.green{background:var(--t-green-bg)} .tag.yellow{background:var(--t-yellow-bg)} .tag.red{background:var(--t-red-bg)} .tag.purple{background:var(--t-purple-bg)} .tag.orange{background:var(--t-orange-bg)} .tag.pink{background:var(--t-pink-bg)} .tag.brown{background:var(--t-brown-bg)}
+/* toggle */
+details.tg{border-radius:4px}
+details.tg>summary{list-style:none;cursor:pointer;display:flex;gap:6px;align-items:flex-start;padding:3px 2px;border-radius:4px}
+details.tg>summary::-webkit-details-marker{display:none}
+details.tg>summary:hover{background:var(--hover)}
+details.tg>summary::before{content:"";flex:0 0 auto;width:0;height:0;margin:7px 6px 0 6px;border-left:6px solid var(--fg);border-top:4.5px solid transparent;border-bottom:4.5px solid transparent;transition:transform .15s}
+details.tg[open]>summary::before{transform:rotate(90deg)}
+details.tg>summary .sm{font-weight:500;flex:1;min-width:0}
+details.tg>.tb{padding:4px 0 8px 26px;display:flex;flex-direction:column;gap:6px}
+/* to-do */
+.todo{display:flex;gap:10px;align-items:flex-start;padding:3px 2px;border-radius:4px;cursor:pointer}
+.todo:hover{background:var(--hover)}
+.todo input{appearance:none;-webkit-appearance:none;width:16px;height:16px;border:1.5px solid var(--fg);border-radius:3px;margin:4px 0 0;flex:0 0 auto;display:grid;place-items:center;cursor:pointer;background:transparent}
+.todo input:checked{background:var(--accent);border-color:var(--accent)}
+.todo input:checked::after{content:"";width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.todo input:checked+span{color:var(--faint);text-decoration:line-through}
+.todo .tm{font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-right:6px}
+/* columns */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.box{border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0;background:var(--bg)}
+.box h4{margin:0;font-size:15px;font-weight:600}
+/* db table */
+.db-bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:6px;margin-top:8px}
+.view{border:0;background:transparent;font-size:14px;padding:4px 8px;border-radius:6px;cursor:pointer;color:var(--muted)}
+.view[aria-pressed="true"]{color:var(--fg);font-weight:600;box-shadow:inset 0 -2px 0 var(--fg);border-radius:0}
+.view:hover{background:var(--hover)}
+.db-bar .sp{flex:1}
+.db-search{border:0;background:var(--hover);border-radius:6px;padding:5px 10px;font:inherit;font-size:14px;color:var(--fg);width:200px;max-width:100%}
+.filter{border:1px solid var(--line);background:transparent;font-size:13px;padding:2px 9px;border-radius:999px;cursor:pointer;color:var(--muted)}
+.filter[aria-pressed="true"]{background:var(--accent-bg);color:var(--accent);border-color:transparent}
+.tbl{overflow-x:auto;width:100%}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:7px 8px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:500;color:var(--muted);font-size:13px;white-space:nowrap}
+th+th,td+td{border-left:1px solid var(--line)}
+td.n,th.n{text-align:right;font-family:var(--f-mono);font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.dbrow{cursor:pointer}
+tr.dbrow:hover td{background:var(--hover)}
+.open-hint{opacity:0;font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 5px;margin-left:6px;background:var(--bg)}
+tr.dbrow:hover .open-hint{opacity:1}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:10px}
+.gcard{border:1px solid var(--line);border-radius:8px;padding:12px 14px;cursor:pointer;display:flex;flex-direction:column;gap:6px;background:var(--bg);text-align:left}
+.gcard:hover{background:var(--hover)}
+.gcard b{font-size:15px}
+.gcard p{font-size:13px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.db-count{font-size:12px;color:var(--faint);padding:6px 2px}
+/* peek */
+.peek{position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);background:var(--bg);box-shadow:var(--shadow);z-index:40;transform:translateX(105%);transition:transform .2s ease;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+.peek.on{transform:none}
+.peek-top{display:flex;gap:4px;align-items:center;padding:8px 10px;border-bottom:1px solid var(--line)}
+.peek-body{overflow-y:auto;padding:24px 28px 60px;display:flex;flex-direction:column;gap:12px}
+.peek-body h1{margin:0;font-size:30px;line-height:1.2}
+.fx{font-family:var(--f-mono);font-size:14px;background:var(--t-gray-bg);padding:10px 12px;border-radius:6px;overflow-x:auto}
+/* forms */
+.inp{font:inherit;font-size:15px;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);width:100%}
+.lbl{display:flex;flex-direction:column;gap:3px;font-size:13px;color:var(--muted)}
+.btn{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:6px 12px;font-size:14px;cursor:pointer}
+.btn:hover{background:var(--hover)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:500}
+.btn.pri:hover{filter:brightness(1.07)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.kpi{border:1px solid var(--line);border-radius:6px;padding:8px 10px}
+.kpi small{display:block;font-size:12px;color:var(--muted)}
+.kpi b{font-family:var(--f-mono);font-size:18px;font-weight:500;font-variant-numeric:tabular-nums}
+.kpi span{display:block;font-size:11.5px;color:var(--faint)}
+/* hierarchy */
+.tree{display:flex;flex-direction:column;gap:4px;font-size:15px}
+.tree div{display:flex;gap:8px;align-items:baseline}
+.tree .tl{font-family:var(--f-mono);color:var(--faint);white-space:pre;flex:0 0 auto}
+.tree small{color:var(--muted)}
+/* funnel */
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:14px}
+.flow .st{border:1px solid var(--line);border-radius:6px;padding:4px 10px}
+.flow .ar{color:var(--faint)}
+/* quiz */
+.qcard{border:1px solid var(--line);border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.q-opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--bg);font-size:15px;padding:9px 12px;border-radius:6px;cursor:pointer}
+.q-opt:hover{background:var(--hover)}
+.q-opt.right{background:var(--t-green-bg);border-color:var(--t-green)}
+.q-opt.wrong{background:var(--t-red-bg);border-color:var(--t-red)}
+.bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.big{font-size:44px;font-weight:700;font-variant-numeric:tabular-nums}
+/* flashcards */
+.fc-wrap{perspective:1200px}
+.fc{position:relative;min-height:250px;cursor:pointer;transform-style:preserve-3d;transition:transform .45s}
+.fc.flip{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:22px;display:flex;flex-direction:column;justify-content:center;gap:10px;text-align:center;box-shadow:0 1px 3px rgba(15,15,15,.06)}
+.fc-face.back{transform:rotateY(180deg);text-align:left;justify-content:flex-start;overflow:auto}
+.fc-face .ft{font-size:clamp(22px,5vw,30px);font-weight:700}
+.fc-face small{color:var(--muted)}
+.fb{font-weight:600}
+.fb.ok{color:var(--t-green)} .fb.no{color:var(--t-red)}
+/* nav footer */
+.pn{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:40px}
+.pn button{border:1px solid var(--line);background:transparent;border-radius:8px;padding:10px 14px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:2px}
+.pn button:hover{background:var(--hover)}
+.pn button small{color:var(--muted);font-size:12px}
+.pn button.nx{text-align:right;grid-column:2}
+/* quick find */
+.qf{position:fixed;inset:0;z-index:50;display:none;align-items:flex-start;justify-content:center;background:rgba(15,15,15,.4);padding:12vh 16px 16px}
+.qf.on{display:flex}
+.qf-box{width:min(620px,100%);background:var(--bg);border-radius:10px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;max-height:70vh}
+.qf-box input{border:0;border-bottom:1px solid var(--line);padding:14px 18px;font:inherit;font-size:17px;background:transparent;color:var(--fg);outline:none}
+.qf-list{overflow-y:auto;padding:6px}
+.qf-it{display:flex;gap:10px;align-items:center;width:100%;border:0;background:transparent;text-align:left;padding:7px 10px;border-radius:6px;cursor:pointer;font-size:14px}
+.qf-it[aria-selected="true"],.qf-it:hover{background:var(--hover)}
+.qf-it small{color:var(--muted);margin-left:auto;font-size:12px;flex:0 0 auto}
+.qf-it .ttl{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.qf-empty{padding:16px;color:var(--muted);font-size:14px}
+.say{background:var(--t-blue-bg);border-radius:6px;padding:10px 14px;font-size:15px}
+footer.ft{margin-top:30px;color:var(--faint);font-size:12px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:560px){.prop .k{width:110px}.pn{grid-template-columns:1fr}.pn button.nx{grid-column:1}.peek-body{padding:20px 18px 60px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" id="side" aria-label="Сторінки">
+    <div class="ws"><div class="av">О</div><div>Підготовка Остапа<small>Account Manager · Meta Ads</small></div></div>
+    <button class="side-btn" id="qfBtn" type="button">🔍 Пошук <kbd>Ctrl K</kbd></button>
+    <div class="side-scroll" id="tree"></div>
+    <div class="side-foot"><div>Пройдено сторінок: <b id="doneN">0</b> з <span id="doneT">0</span></div><div class="meter"><i id="doneBar"></i></div></div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+  <div class="mainc">
+    <header class="top">
+      <button class="ibtn" id="menuBtn" type="button" aria-label="Меню">☰</button>
+      <div class="crumb" id="crumb"></div>
+      <div class="sp"></div>
+      <button class="ibtn" id="themeBtn" type="button" aria-label="Змінити тему">◐ <span id="themeLbl">Тема</span></button>
+    </header>
+    <main class="page" id="page"></main>
+  </div>
+</div>
+<aside class="peek" id="peek" aria-label="Деталі терміна" aria-hidden="true">
+  <div class="peek-top"><button class="ibtn" id="peekClose" type="button" aria-label="Закрити">✕</button><span class="muted" style="font-size:13px">Словник</span><span style="flex:1"></span><button class="ibtn" id="peekPrev" type="button" aria-label="Попередній">↑</button><button class="ibtn" id="peekNext" type="button" aria-label="Наступний">↓</button></div>
+  <div class="peek-body" id="peekBody"></div>
+</aside>
+<div class="qf" id="qf" role="dialog" aria-modal="true" aria-label="Пошук"><div class="qf-box"><input id="qfIn" type="text" placeholder="Шукати сторінки, терміни, кейси…" autocomplete="off"><div class="qf-list" id="qfList"></div></div></div>
+
+<script>
+/* ---------- helpers ---------- */
+const $=(s,r=document)=>r.querySelector(s);
+const store={get(k,d){try{const v=localStorage.getItem("mp_"+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem("mp_"+k,JSON.stringify(v))}catch(e){}}};
+const fmt=(n,d=2)=>isFinite(n)?Number(n).toLocaleString("uk-UA",{minimumFractionDigits:d,maximumFractionDigits:d}):"—";
+const usd=(n,d=2)=>isFinite(n)?"$"+fmt(n,d):"—";
+const pct=(n,d=2)=>isFinite(n)?fmt(n,d)+"%":"—";
+
+/* ---------- DATA: glossary ---------- */
+const CATS={metric:"Метрики",cab:"Кабінет Meta",track:"Трекінг",agency:"Агентські акаунти",biz:"Бізнес і клієнти"};
+const GL=[
+ {t:"Spend / Amount spent",ua:"Витрати, спенд",c:"metric",s:"Скільки грошей реклама вже витратила за період. Для агентства це головна цифра: від спенду залежить дохід компанії.",ex:"Клієнт за тиждень витратив $12 400, тобто його тижневий спенд $12 400."},
+ {t:"Impressions",ua:"Покази",c:"metric",s:"Скільки разів оголошення показали на екрані. Одна людина може побачити рекламу кілька разів, і кожен раз рахується.",ex:"1 людина побачила оголошення 3 рази = 3 покази."},
+ {t:"Reach",ua:"Охоплення",c:"metric",s:"Скільки унікальних людей побачили рекламу хоча б раз.",ex:"300 000 показів, 100 000 людей → охоплення 100 000."},
+ {t:"Frequency",ua:"Частота",c:"metric",s:"Скільки разів у середньому одна людина бачила рекламу. Висока частота на холодній аудиторії означає, що людям набридло оголошення.",f:"Frequency = Impressions ÷ Reach",ex:"300 000 ÷ 100 000 = 3. Якщо за тиждень частота росте понад 3–4, а CTR падає, оголошення «вигорає»."},
+ {t:"CPM",ua:"Ціна за 1000 показів",c:"metric",s:"Скільки коштує показати рекламу 1000 разів. Залежить від конкуренції за аудиторію, країни, сезону і якості оголошення.",f:"CPM = Spend ÷ Impressions × 1000",ex:"$500 ÷ 50 000 × 1000 = $10. У США і Західній Європі CPM вищий, ніж в Азії чи Латинській Америці. Перед Black Friday і Різдвом CPM росте."},
+ {t:"Clicks (all)",ua:"Усі кліки",c:"metric",s:"Будь-які кліки по оголошенню: на профіль, лайки, розгортання тексту, перегляд фото. Не тільки переходи на сайт.",ex:"Тому для реклами на сайт дивляться не «всі кліки», а Link clicks."},
+ {t:"Link clicks",ua:"Кліки за посиланням",c:"metric",s:"Кліки, які ведуть людину за посиланням: на сайт, у застосунок, на форму.",ex:"Головний клік для трафікових і конверсійних кампаній."},
+ {t:"CTR",ua:"Клікабельність",c:"metric",s:"Який відсоток людей, що побачили рекламу, клікнули. Показує, наскільки оголошення чіпляє. У Meta є CTR (all) і CTR (link click-through rate); для аналізу беруть link CTR.",f:"CTR = Clicks ÷ Impressions × 100%",ex:"500 кліків ÷ 50 000 показів = 1%. Орієнтир для link CTR: близько 1% і вище — нормально, нижче 0,5% — креатив слабкий (залежить від ніші)."},
+ {t:"CPC",ua:"Ціна за клік",c:"metric",s:"Скільки в середньому коштує один клік.",f:"CPC = Spend ÷ Clicks",ex:"$500 ÷ 500 = $1. Зв'язок: CPC = CPM ÷ (CTR × 10). Якщо CPM $10 і CTR 1%, CPC = $1."},
+ {t:"Landing page views",ua:"Перегляди цільової сторінки",c:"metric",s:"Скільки людей після кліку реально дочекались завантаження сайту. Якщо кліків багато, а переглядів сторінки мало, сайт повільний або є технічна проблема.",ex:"1000 link clicks і лише 550 LPV — сайт довго вантажиться."},
+ {t:"Results / Conversions",ua:"Результати, конверсії",c:"metric",s:"Цільова дія, на яку налаштована кампанія: покупка, лід (заявка), реєстрація, встановлення застосунку.",ex:"Для інтернет-магазину результат — Purchase, для школи — Lead."},
+ {t:"CR (Conversion rate)",ua:"Конверсія",c:"metric",s:"Який відсоток людей, що перейшли на сайт, зробили цільову дію. Показує якість сайту й оферу, а не реклами.",f:"CR = Conversions ÷ Clicks × 100%",ex:"20 покупок ÷ 1000 кліків = 2%. Для e-commerce 1–3% — типово."},
+ {t:"CPA / Cost per result",ua:"Ціна за дію (результат)",c:"metric",s:"Скільки коштує одна цільова дія: покупка, лід, реєстрація. Головна метрика для більшості performance-клієнтів. Різновиди: CPL (за лід), CPI (за встановлення), CPP (за покупку).",f:"CPA = Spend ÷ Conversions",ex:"$1000 ÷ 40 лідів = $25 за лід."},
+ {t:"ROAS",ua:"Окупність рекламних витрат",c:"metric",s:"Скільки виручки приносить кожен долар, вкладений у рекламу. Рахується від виручки, а не від прибутку.",f:"ROAS = Revenue ÷ Spend",ex:"Витратили $2000, отримали $6000 виручки → ROAS = 3 (або 300%). Кожен $1 приніс $3."},
+ {t:"ROI",ua:"Окупність інвестицій",c:"metric",s:"Скільки чистого прибутку приніс вкладений долар з урахуванням усіх витрат (собівартість, доставка, комісії). ROI буває від'ємним, коли ви в мінусі.",f:"ROI = (Прибуток − Витрати) ÷ Витрати × 100%",ex:"Витрати $2000, прибуток (після собівартості) $2600 → ROI = (2600 − 2000) ÷ 2000 = 30%."},
+ {t:"Break-even ROAS",ua:"ROAS беззбитковості",c:"metric",s:"Мінімальний ROAS, при якому клієнт виходить у нуль. Залежить від маржі продукту.",f:"Break-even ROAS = 1 ÷ Маржа",ex:"Маржа 40% → 1 ÷ 0,4 = 2,5. Якщо ROAS нижче 2,5, клієнт втрачає гроші, навіть якщо ROAS здається «непоганим»."},
+ {t:"AOV",ua:"Середній чек",c:"metric",s:"Середня сума однієї покупки.",f:"AOV = Revenue ÷ Purchases",ex:"$6000 ÷ 60 покупок = $100."},
+ {t:"LTV",ua:"Цінність клієнта за весь час",c:"metric",s:"Скільки грошей клієнт приносить за весь час, а не лише з першої покупки. Через LTV бізнес може дозволити собі дорожчий CPA.",ex:"Підписка $30/міс, клієнт у середньому платить 6 місяців → LTV $180. Тоді CPA $60 — вигідно."},
+ {t:"CAC",ua:"Вартість залучення клієнта",c:"metric",s:"Скільки в сумі коштує залучити одного платного клієнта з урахуванням усіх витрат на маркетинг і продажі, не лише реклами.",ex:"Схоже на CPA, але ширше: включає зарплати, сервіси, знижки."},
+ {t:"Hook rate",ua:"Утримання з перших секунд",c:"metric",s:"Яка частка людей подивилась перші 3 секунди відео. Показує, чи зупиняє креатив скрол.",f:"Hook rate = 3-sec video plays ÷ Impressions × 100%",ex:"Понад 25–30% — сильний «гачок» (орієнтир)."},
+ {t:"Business Manager / Business portfolio",ua:"Бізнес-менеджер (Meta Business Suite)",c:"cab",s:"«Головна папка» компанії в Meta. В ній живуть рекламні акаунти, сторінки Facebook, Instagram-акаунти, пікселі, люди та їхні доступи. Зараз Meta називає це «Business portfolio».",ex:"Агентство може видати клієнту рекламний акаунт у своєму БМ або «пошерити» його в БМ клієнта."},
+ {t:"Ad account",ua:"Рекламний акаунт (кабінет)",c:"cab",s:"Місце, де створюються кампанії і з якого списуються гроші. У нього є валюта, часовий пояс, спосіб оплати, ліміт витрат і статус (активний, заблокований).",ex:"Валюту й часовий пояс акаунта після створення змінити не можна, тільки створити новий."},
+ {t:"Campaign",ua:"Кампанія",c:"cab",s:"Верхній рівень реклами. Тут обирається ціль (objective) і, за бажанням, бюджет на всю кампанію (Advantage campaign budget).",ex:"Кампанія «Продажі — Польща — жовтень» з ціллю Sales."},
+ {t:"Ad set",ua:"Група оголошень",c:"cab",s:"Середній рівень. Тут налаштовують, КОМУ, ДЕ і ЯК показувати: аудиторія, гео, плейсменти, бюджет (якщо не на рівні кампанії), подія оптимізації, розклад, стратегія ставок.",ex:"Ad set «Жінки 25–45, PL, Advantage+ audience, оптимізація на Purchase»."},
+ {t:"Ad",ua:"Оголошення",c:"cab",s:"Нижній рівень: те, що бачить людина. Картинка чи відео, текст, заголовок, кнопка (CTA), посилання, UTM-мітки.",ex:"Одне відео 15 сек + текст + кнопка «Купити»."},
+ {t:"Objective",ua:"Ціль кампанії",c:"cab",s:"Що Meta має шукати для вас. Зараз їх 6: Awareness (впізнаваність), Traffic (трафік), Engagement (взаємодія), Leads (ліди), App promotion (застосунок), Sales (продажі). Алгоритм показує рекламу тим, хто найімовірніше зробить саме цю дію.",ex:"Інтернет-магазину з бюджетом $10k+ майже завжди потрібна ціль Sales з оптимізацією на Purchase."},
+ {t:"CBO / Advantage campaign budget",ua:"Бюджет на рівні кампанії",c:"cab",s:"Бюджет задається на кампанію, і Meta сама розподіляє гроші між групами оголошень туди, де результат дешевший. Протилежність — ABO, коли бюджет задається на кожну групу окремо.",ex:"ABO зручно для тестів (контролюєш гроші на кожну аудиторію), CBO — для масштабування."},
+ {t:"Daily / Lifetime budget",ua:"Денний / загальний бюджет",c:"cab",s:"Денний — скільки в середньому витрачати за день (у конкретний день Meta може витратити до 75% більше, але за тиждень не більше 7× денного). Lifetime — сума на весь період кампанії.",ex:"Денний $500 → у сильний день може бути $875, але за 7 днів максимум $3500."},
+ {t:"Bid strategy",ua:"Стратегія ставок",c:"cab",s:"Як Meta торгується на аукціоні. Highest volume (найбільше результатів за бюджет, за замовчуванням), Cost per result goal (тримати середню ціну результату), ROAS goal (тримати окупність), Bid cap (максимальна ставка на аукціоні).",ex:"Для старту — Highest volume. Cost cap/bid cap — коли треба жорстко контролювати CPA при масштабуванні."},
+ {t:"Learning phase",ua:"Фаза навчання",c:"cab",s:"Період, коли алгоритм вчиться, кому показувати рекламу. Щоб вийти з неї, групі потрібно приблизно 50 подій оптимізації за 7 днів. У цей час результати нестабільні, і різкі зміни краще не робити.",ex:"Статус «Learning limited» — група не набирає 50 подій: замалий бюджет, вузька аудиторія або занадто «важка» подія."},
+ {t:"Significant edit",ua:"Суттєва зміна",c:"cab",s:"Зміна, яка перезапускає фазу навчання: нова аудиторія, новий креатив, зміна події оптимізації чи стратегії ставок, різка зміна бюджету, пауза на 7+ днів.",ex:"Тому бюджет часто піднімають поступово, приблизно на 20% за раз, а не вдвічі одразу."},
+ {t:"Audience: Broad / Custom / Lookalike",ua:"Аудиторії",c:"cab",s:"Broad — широка аудиторія (тільки гео, вік, стать), алгоритм сам шукає покупців. Custom — ваші люди: відвідувачі сайту, покупці, база email. Lookalike — люди, схожі на вашу Custom-аудиторію. Advantage+ audience — режим, де Meta сама розширює таргетинг.",ex:"Ретаргетинг: Custom «відвідали сайт за 30 днів, але не купили»."},
+ {t:"Placements",ua:"Плейсменти",c:"cab",s:"Де показується реклама: стрічка Facebook/Instagram, Stories, Reels, Messenger, Audience Network. Advantage+ placements — Meta сама обирає, де дешевше.",ex:"У розбивці (breakdown) по плейсментах видно, що Reels дає найнижчий CPA."},
+ {t:"Breakdown",ua:"Розбивка звіту",c:"cab",s:"Кнопка в Ads Manager, яка ділить статистику за віком, статтю, країною, плейсментом, пристроєм, часом. Головний інструмент, щоб знайти, ЩО саме працює або тягне вниз.",ex:"Breakdown → Delivery → Age: вік 18–24 з'їдає 30% бюджету і не купує."},
+ {t:"Delivery status",ua:"Статус показу",c:"cab",s:"Колонка Delivery в Ads Manager: Active (крутиться), Learning (навчається), Learning limited, In review (на модерації), Rejected (відхилено), Not delivering (не показується), Off, Completed.",ex:"«Not delivering» часто означає: закінчився бюджет, ліміт витрат акаунта або проблема з оплатою."},
+ {t:"Ad review / Rejected",ua:"Модерація / відхилено",c:"cab",s:"Кожне оголошення перевіряє Meta на відповідність правилам (Advertising Standards). Відхилене оголошення можна виправити або подати на повторну перевірку (Request review).",ex:"Типові причини: обіцянки «гарантовано схуднете», фото «до/після», особисті атрибути («Ви маєте борги?»)."},
+ {t:"Account Quality / Account status",ua:"Якість і статус акаунта",c:"cab",s:"Розділ, де видно обмеження: заблоковані акаунти, сторінки, БМ, відхилені оголошення, і де подається апеляція (Request review).",ex:"Перше місце, куди дивитись, коли клієнт пише «у мене все впало»."},
+ {t:"Spending limit",ua:"Ліміт витрат",c:"cab",s:"Максимальна сума, яку може витратити акаунт. Коли ліміт досягнуто, реклама зупиняється. Буває ліміт, який ставить власник, і ліміт, який ставить сама Meta для нових акаунтів (daily spending limit).",ex:"Агентські акаунти цінують саме за високі ліміти: можна одразу витрачати тисячі доларів на день."},
+ {t:"Billing / Payment method",ua:"Оплата",c:"cab",s:"Як акаунт платить за рекламу: карткою з порогом списання (billing threshold), передплатою (prepaid) або через кредитну лінію агентства. Проблема з оплатою = реклама зупиняється.",ex:"В агентському акаунті клієнт поповнює баланс через агентство, а не своєю карткою."},
+ {t:"Special ad categories",ua:"Особливі категорії",c:"cab",s:"Кредити й фінанси, працевлаштування, житло, соціальні та політичні теми. Для них таргетинг обмежений (не можна звужувати вік, стать тощо), і це треба вказати при створенні кампанії.",ex:"Реклама кредитів без позначки Special ad category → відхилення і ризик блокування."},
+ {t:"Ads Library",ua:"Бібліотека реклами",c:"cab",s:"Публічна база всіх активних оголошень у Meta. Можна подивитись рекламу будь-якого конкурента.",ex:"Перед зустріччю з новим клієнтом можна глянути, що він зараз крутить."},
+ {t:"Meta Pixel",ua:"Піксель",c:"track",s:"Шматок коду на сайті, який передає в Meta, що люди роблять після кліку: переглянули товар, додали в кошик, купили. Без пікселя алгоритм «сліпий».",ex:"Немає пікселя на сторінці «Дякуємо за покупку» → Meta не бачить покупок і не може оптимізуватись."},
+ {t:"Conversions API (CAPI)",ua:"API конверсій",c:"track",s:"Передача подій напряму з сервера сайту в Meta, а не тільки через браузер. Додає дані, які втрачаються через блокувальники реклами й iOS. Працює разом з пікселем; дублікати прибирає дедуплікація за event_id.",ex:"Після підключення CAPI Meta бачить більше покупок і краще оптимізує."},
+ {t:"Events Manager / Standard events",ua:"Менеджер подій",c:"track",s:"Розділ, де видно всі події з пікселя й CAPI. Стандартні події: PageView, ViewContent, AddToCart, InitiateCheckout, Purchase, Lead, CompleteRegistration.",ex:"Якщо Purchase у Events Manager раптом впав до нуля — найімовірніше, зламався піксель, а не реклама."},
+ {t:"Event Match Quality",ua:"Якість зіставлення подій",c:"track",s:"Оцінка від 0 до 10, наскільки добре Meta може «впізнати» людину з події (email, телефон тощо). Чим вище, тим краща оптимізація.",ex:"EMQ 4/10 → варто передавати більше даних через CAPI."},
+ {t:"Attribution setting",ua:"Вікно атрибуції",c:"track",s:"За який період після кліку чи перегляду Meta зараховує конверсію рекламі. За замовчуванням: 7 днів після кліку і 1 день після перегляду.",ex:"Тому цифри в Meta і в Google Analytics клієнта майже ніколи не збігаються, і це нормально."},
+ {t:"UTM",ua:"UTM-мітки",c:"track",s:"Хвостик у посиланні (utm_source=facebook&utm_campaign=...), за яким аналітика сайту бачить, звідки прийшов відвідувач.",ex:"Без UTM клієнт не зможе звірити продажі з Meta у своїй CRM."},
+ {t:"Agency ad account",ua:"Агентський рекламний акаунт",c:"agency",s:"Рекламний акаунт, який належить агентству-партнеру Meta, а користується ним клієнт. Переваги: вищі ліміти витрат, більша «довіра» платформи, менше раптових блокувань, швидка заміна акаунта, підтримка, зручна оплата через агентство.",ex:"Медіабаєр замість власного акаунта з лімітом $50/день отримує агентський і одразу витрачає $3000/день."},
+ {t:"Top-up",ua:"Поповнення",c:"agency",s:"Клієнт переказує гроші агентству, а агентство зараховує їх на рекламний акаунт. Якщо поповнення запізнилось, реклама зупиняється, і клієнт втрачає гроші, тому швидкість тут критична.",ex:"Account Manager бачить, що баланс закінчиться за 1 день, і заздалегідь нагадує клієнту поповнити."},
+ {t:"Commission / Fee",ua:"Комісія агентства",c:"agency",s:"Відсоток, який агентство бере з кожного поповнення або спенду. Зазвичай це кілька відсотків, і що більший спенд, то нижча ставка. Це основний дохід агентства, тому зростання спенду клієнта = зростання доходу компанії.",ex:"Комісія 5%: клієнт поповнює $20 000 → агентство заробляє $1000. Точні ставки Tech4You уточніть на співбесіді."},
+ {t:"Upsell (ріст спенду)",ua:"Збільшення витрат клієнта",c:"agency",s:"Допомогти клієнту витрачати більше, бо реклама окупається: більше акаунтів під нові гео, нові платформи (TikTok, Google), вищі ліміти, кредитна лінія.",ex:"Клієнт має ROAS 3 на Польщі → пропонуємо ще 2 акаунти під Чехію і Румунію."},
+ {t:"Ban / Disabled account",ua:"Блокування акаунта",c:"agency",s:"Meta зупиняє акаунт за порушення правил або «підозрілу» активність. Реклама стоїть, гроші на балансі «зависають». Для клієнта з великим спендом це втрати щогодини.",ex:"AM швидко подає апеляцію або видає заміну, повідомляє клієнту строки й наступні кроки."},
+ {t:"Appeal",ua:"Апеляція",c:"agency",s:"Запит до Meta переглянути блокування чи відхилення. В агентів-партнерів Meta є прямі канали підтримки, тому апеляції розглядають швидше.",ex:"Account Quality → Request review, або через агентський канал підтримки."},
+ {t:"Media buyer",ua:"Медіабаєр",c:"agency",s:"Спеціаліст, який закуповує рекламу й налаштовує кампанії. Часто саме медіабаєри та команди медіабаїнгу — клієнти агентських акаунтів.",ex:"Ваш контакт у клієнта — найчастіше тімлід медіабаїнгу або власник."},
+ {t:"Vertical / Offer",ua:"Вертикаль, офер",c:"agency",s:"Ніша, в якій працює реклама: e-commerce, EdTech, Nutra (товари для здоров'я), фінанси, застосунки. Офер — конкретна пропозиція, яку рекламують.",ex:"У Tech4You серед клієнтів EdTech, E-commerce, Affiliate Marketing і Retail."},
+ {t:"Affiliate marketing",ua:"Партнерський маркетинг (арбітраж трафіку)",c:"agency",s:"Модель, де рекламодавець отримує винагороду від власника продукту за кожен продаж чи лід. Афіліати купують рекламу дешевше, ніж заробляють на конверсіях.",ex:"Афіліат витрачає $30 на лід і отримує $45 від партнерської мережі."},
+ {t:"Whitehat / Greyhat",ua:"«Білі» і «сірі» схеми",c:"agency",s:"Whitehat — реклама повністю за правилами Meta. Greyhat — порушення правил, яке ризикує баном. Cloaking (показ модератору одного сайту, а людям іншого) — пряме порушення, за яке Meta блокує акаунти та БМ.",ex:"AM не порадник у сірих схемах; його задача — помічати ризики і берегти акаунти компанії."},
+ {t:"Retention / Churn",ua:"Утримання / відтік клієнтів",c:"biz",s:"Retention — скільки клієнтів залишаються з агентством. Churn — скільки йдуть. Для Account Manager це ключові показники.",ex:"Якщо спенд клієнта падає 3 тижні поспіль — ризик відтоку, треба дзвонити."},
+ {t:"Onboarding",ua:"Онбординг клієнта",c:"biz",s:"Перші кроки нового клієнта: знайомство, правила і ставки, видача акаунтів, налаштування доступів, перше поповнення, перший звіт.",ex:"Добрий онбординг = клієнт запустився за 24–48 годин без проблем."},
+ {t:"KPI / SLA",ua:"Ключові показники / рівень сервісу",c:"biz",s:"KPI — цифри, за якими оцінюють роботу (спенд клієнтів, ріст, утримання). SLA — обіцяні строки сервісу: як швидко відповідаємо, поповнюємо, видаємо акаунт.",ex:"SLA: відповідь клієнту до 15 хв у робочий час, поповнення до 1 години."}
+];
+
+/* ---------- quiz ---------- */
+const QUIZ=[
+ {q:"Витрати $800, покази 100 000. Який CPM?",o:["$0,80","$8","$80","$12,5"],a:1,e:"CPM = 800 ÷ 100 000 × 1000 = $8."},
+ {q:"Покази 40 000, кліки за посиланням 600. Який CTR?",o:["0,15%","1,5%","15%","6%"],a:1,e:"CTR = 600 ÷ 40 000 × 100% = 1,5%."},
+ {q:"Витрати $1 200, покупок 30. Скільки коштує покупка (CPA)?",o:["$25","$36","$40","$0,025"],a:2,e:"CPA = 1200 ÷ 30 = $40."},
+ {q:"Витрати $5 000, виручка $15 000. ROAS?",o:["0,33","2","3","300$"],a:2,e:"ROAS = 15 000 ÷ 5 000 = 3 (або 300%)."},
+ {q:"Маржа продукту 25%. Який ROAS потрібен, щоб вийти в нуль?",o:["1,25","2,5","4","25"],a:2,e:"Break-even ROAS = 1 ÷ 0,25 = 4. ROAS 3 тут означає збиток."},
+ {q:"Що з цього рахується на рівні Ad set (групи оголошень)?",o:["Ціль кампанії","Аудиторія і плейсменти","Текст оголошення","Валюта акаунта"],a:1,e:"Ad set відповідає за те, КОМУ і ДЕ показувати: аудиторія, гео, плейсменти, подія оптимізації, бюджет при ABO."},
+ {q:"Скільки подій оптимізації приблизно потрібно, щоб група вийшла з фази навчання?",o:["10 за день","50 за 7 днів","100 за місяць","500 за 7 днів"],a:1,e:"Орієнтир Meta — близько 50 подій оптимізації за 7 днів."},
+ {q:"CPM різко зріс, CTR і CR без змін. Найімовірніша причина?",o:["Зламався піксель","Вигорів креатив","Зросла конкуренція на аукціоні (сезон, нові рекламодавці)","Поганий сайт"],a:2,e:"Якщо дорожчають тільки покази, а реакція людей така сама — дорожчає аукціон: сезонність (Q4, Black Friday), більше конкурентів, вужча аудиторія."},
+ {q:"CTR нормальний, кліків багато, а покупок майже немає. Куди дивитись насамперед?",o:["Креатив","Сайт, офер, ціна і роботу пікселя","CPM","Плейсменти"],a:1,e:"Реклама людей приводить, а купувати вони не хочуть або не можуть: проблема після кліку — сайт, ціна, оплата, або піксель не фіксує покупки."},
+ {q:"Частота за тиждень 5,8, CTR упав удвічі. Що відбувається?",o:["Learning phase","Вигорання креативу / аудиторії","Помилка оплати","Модерація"],a:1,e:"Людям набридло одне й те саме оголошення. Рішення: нові креативи, ширша аудиторія."},
+ {q:"Клієнт: «Реклама зупинилась». Статус Not delivering. Що перевірити першим?",o:["Колір кнопки","Баланс / ліміт витрат / оплату і статус акаунта","Вікно атрибуції","Bid cap"],a:1,e:"Найчастіші причини зупинки: закінчився баланс, досягнуто spending limit, проблема з оплатою, акаунт обмежено."},
+ {q:"Що таке CBO (Advantage campaign budget)?",o:["Бюджет на кожне оголошення","Бюджет на кампанію, Meta сама ділить його між групами","Ліміт витрат акаунта","Ставка за 1000 показів"],a:1,e:"CBO — бюджет на рівні кампанії, алгоритм розподіляє його туди, де результат дешевший."},
+ {q:"Яке вікно атрибуції стоїть у Meta за замовчуванням?",o:["1 день після кліку","7 днів після кліку і 1 день після перегляду","28 днів після перегляду","30 днів після кліку"],a:1,e:"За замовчуванням 7-day click, 1-day view. Звідси розбіжності з аналітикою клієнта."},
+ {q:"Чому клієнти беруть агентські акаунти?",o:["Вони безкоштовні","Вищі ліміти, більша довіра платформи, менше банів, швидка заміна, підтримка","Там не діє модерація","Там дешевший CPM"],a:1,e:"Агентські акаунти не скасовують правил і не знижують CPM; їхня цінність — у стабільності, лімітах і сервісі."},
+ {q:"Головна грошова метрика агентства з агентськими акаунтами?",o:["CTR клієнта","Спенд клієнтів (і комісія з поповнень)","Кількість лайків","Hook rate"],a:1,e:"Дохід агентства = комісія від поповнень/спенду. Тому в обов'язках AM — ріст спенду (upsell)."},
+ {q:"Як правильно масштабувати успішну групу, щоб не «зламати» навчання?",o:["Підняти бюджет у 5 разів","Піднімати поступово (~20% за раз) або дублювати / додавати нові групи","Змінити аудиторію","Поставити на паузу на тиждень"],a:1,e:"Різка зміна бюджету — суттєва зміна, яка може перезапустити навчання. Тому піднімають плавно або масштабують горизонтально."},
+ {q:"CPC = ? якщо CPM = $12, CTR = 1,5%",o:["$0,18","$0,80","$1,25","$8"],a:1,e:"CPC = CPM ÷ (CTR × 10) = 12 ÷ 15 = $0,80."},
+ {q:"Що робить Conversions API (CAPI)?",o:["Блокує ботів","Передає події з сервера напряму в Meta, доповнюючи піксель","Збільшує ліміт витрат","Знижує CPM удвічі"],a:1,e:"CAPI повертає дані, які втрачаються через браузери, блокувальники, iOS. Це покращує оптимізацію."},
+ {q:"Link clicks 1 000, Landing page views 480. Що це означає?",o:["Все добре","Більше половини людей не дочекались сайту — швидкість/технічна проблема","Поганий креатив","Висока частота"],a:1,e:"Велика різниця між кліками і переглядами сторінки — сигнал повільного або зламаного сайту."},
+ {q:"ROAS 2,2 при маржі 50%. Клієнт у плюсі?",o:["Так, бо ROAS > 2 (точка беззбитковості 2)","Ні","Неможливо порахувати","Так, ROI 220%"],a:0,e:"Break-even = 1 ÷ 0,5 = 2. ROAS 2,2 трохи вище — невеликий плюс."},
+ {q:"Де дивитись, за що заблоковано акаунт і подавати апеляцію?",o:["Ads Library","Account Quality / Account status (Business Support)","Events Manager","Audience Insights"],a:1,e:"Там видно обмеження і є кнопка Request review."},
+ {q:"Яка ціль кампанії правильна для інтернет-магазину, що хоче покупки?",o:["Traffic","Engagement","Sales (оптимізація на Purchase)","Awareness"],a:2,e:"Ціль Sales з подією Purchase — алгоритм шукає саме покупців, а не клікерів."},
+ {q:"Що таке Reach?",o:["Кількість показів","Кількість унікальних людей, які побачили рекламу","Кількість кліків","Частота"],a:1,e:"Reach — унікальні люди. Покази можуть бути повторними."},
+ {q:"Клієнт витрачав $3 000/день, а тепер $1 200/день. Ваша перша дія як AM?",o:["Чекати, поки сам напише","Зв'язатись, з'ясувати причину (бан, результати, гроші, конкурент) і запропонувати рішення","Підняти комісію","Закрити акаунт"],a:1,e:"Падіння спенду — сигнал ризику відтоку. Проактивний контакт і рішення — головна робота AM."},
+ {q:"Що з цього Special ad category?",o:["Одяг","Кредити та фінансові послуги","Ресторани","Ігри"],a:1,e:"Кредити, працевлаштування, житло, соціальні та політичні теми."},
+ {q:"Покази 250 000, охоплення 50 000. Частота?",o:["0,2","5","12,5","50"],a:1,e:"Frequency = 250 000 ÷ 50 000 = 5."},
+ {q:"Що таке ABO?",o:["Бюджет на рівні кожної групи оголошень","Автоматичний бан","Вікно атрибуції","Тип пікселя"],a:0,e:"Ad set budget — зручно для тестів, бо ти контролюєш гроші на кожну аудиторію."},
+ {q:"Кліки 2 000, покупки 50. CR?",o:["0,4%","2,5%","25%","40%"],a:1,e:"CR = 50 ÷ 2 000 × 100% = 2,5%."},
+ {q:"Комісія 4%. Клієнт поповнив $45 000 за місяць. Дохід агентства?",o:["$450","$1 800","$4 500","$18 000"],a:1,e:"45 000 × 0,04 = $1 800."},
+ {q:"Яка зміна НЕ перезапускає фазу навчання зазвичай?",o:["Нова аудиторія","Нова подія оптимізації","Невелика зміна бюджету (~10–20%)","Новий креатив"],a:2,e:"Невеликі зміни бюджету зазвичай безпечні; аудиторія, креатив, подія оптимізації — суттєві."}
+];
+
+/* ---------- cases ---------- */
+const CASES=[
+ {t:"CPA виріс на 40% за тиждень",tag:"Діагностика",steps:[
+  "Розкладаю CPA на частини: CPA = CPM ÷ (CTR × 10) ÷ CR. Дивлюсь, яка з них змінилась.",
+  "Виріс CPM → дорожчає аукціон: сезон, конкуренти, вузька аудиторія. Дивлюсь breakdown по гео і плейсментах.",
+  "Впав CTR → вигорає креатив: дивлюсь частоту. Рішення — нові креативи.",
+  "Впав CR → проблема після кліку: сайт, ціна, акція закінчилась, оплата, піксель. Звіряю з Events Manager і аналітикою клієнта.",
+  "Перевіряю, чи не було суттєвих змін (новий креатив, бюджет ×2) — група могла повернутись у фазу навчання.",
+  "Даю клієнту висновок і 2–3 конкретні кроки, домовляюсь про дату перевірки."]},
+ {t:"Клієнт пише: «акаунт заблокували, все стоїть»",tag:"Криза",steps:[
+  "Відповідаю одразу: «Бачу, вже займаюсь, повернусь з деталями за 15 хвилин». Клієнт має відчути, що він не сам.",
+  "Перевіряю Account Quality: що саме заблоковано (акаунт, БМ, сторінка), яка причина.",
+  "Якщо помилка чи спірне рішення — подаємо апеляцію через агентський канал. Якщо є — паралельно видаємо резервний акаунт, щоб реклама не стояла.",
+  "Розбираємось, що спричинило бан (креатив, сайт, офер), щоб не повторилось на новому акаунті.",
+  "Пояснюю клієнту строки, що з балансом, і що робимо далі. Фіксую інцидент у Trello."]},
+ {t:"Спенд клієнта впав з $3k до $1k на день",tag:"Ризик відтоку",steps:[
+  "Не чекаю — пишу або дзвоню: «Бачу, що спенд просів. Що відбувається? Чим допомогти?»",
+  "Можливі причини: результат погіршився, проблема з акаунтом, касовий розрив, клієнт пішов до конкурента, сезон.",
+  "Під кожну причину своє рішення: допомога з діагностикою, нові акаунти, кредитна лінія (якщо є), краща ставка за обсяг, нові гео/платформи.",
+  "Фіксую домовленості та контролюю спенд наступні дні."]},
+ {t:"Клієнт хоче масштабуватись: $10k → $30k на місяць",tag:"Upsell",steps:[
+  "Уточнюю: на якому ROAS/CPA зараз, яка точка беззбитковості, чи витримає продукт/відділ продажів обсяг.",
+  "Пропоную масштабування: плавне підняття бюджету (~20% за раз) на робочих групах, дублювання на нові гео, нові акаунти під нові напрями, тест TikTok чи Google.",
+  "З боку агентства: більше акаунтів, вищі ліміти, швидші поповнення, можливо краща ставка комісії за обсяг.",
+  "Домовляюсь про регулярний контроль: раз на тиждень дивимось цифри разом."]},
+ {t:"Реклама «не крутиться» (Not delivering)",tag:"Технічне",steps:[
+  "Перевіряю баланс і spending limit акаунта.",
+  "Перевіряю оплату / білінг і статус акаунта.",
+  "Чи оголошення пройшли модерацію (In review / Rejected)?",
+  "Чи не закінчився розклад чи бюджет групи; чи не надто вузька аудиторія чи низька ставка (bid cap).",
+  "Повідомляю клієнту причину і час виправлення."]},
+ {t:"CTR 2%, кліків багато, а покупок нуль",tag:"Діагностика",steps:[
+  "Реклама працює — проблема після кліку.",
+  "Перевіряю піксель: чи є подія Purchase в Events Manager, чи стоїть код на сторінці «дякуємо».",
+  "Порівнюю Link clicks і Landing page views: можливо, сайт не вантажиться.",
+  "Сам проходжу шлях покупця: працює кошик, оплата, мобільна версія?",
+  "Якщо технічно все ок — питання оферу і ціни, обговорюю з клієнтом."]},
+ {t:"ROAS у Meta 4, а клієнт каже «в мене продажів менше»",tag:"Атрибуція",steps:[
+  "Пояснюю: Meta рахує конверсії у вікні 7 днів після кліку + 1 день після перегляду і може зараховувати продажі, які аналітика клієнта приписує іншим каналам.",
+  "Звіряємо за UTM в аналітиці/CRM клієнта та за однаковий період і часовий пояс.",
+  "Перевіряємо дублікати (піксель + CAPI без дедуплікації дають подвоєння).",
+  "Домовляємось, яка цифра «головна» для рішень — обидві сторони дивляться однаково."]},
+ {t:"Клієнт незадоволений і погрожує піти",tag:"Комунікація",steps:[
+  "Вислуховую до кінця, не виправдовуюсь. Перепитую, щоб правильно зрозуміти суть.",
+  "Визнаю те, що справді пішло не так, без звинувачень.",
+  "Пропоную конкретний план із строками й відповідальними.",
+  "Виконую і сам повертаюсь із результатом раніше, ніж клієнт нагадає.",
+  "Це мій досвід з Kykil і Kofax: клієнта утримує не ідеальність, а швидкість і чесність."]}
+];
+
+/* ---------- number tasks ---------- */
+const TASKS=[
+ {q:"Клієнт витратив $12 000, отримав 1 200 000 показів, 15 600 кліків за посиланням і 390 покупок на суму $42 900. Порахуйте CPM, CTR, CPC, CR, CPA, AOV, ROAS.",a:"CPM = 12 000 ÷ 1 200 000 × 1000 = $10<br>CTR = 15 600 ÷ 1 200 000 = 1,3%<br>CPC = 12 000 ÷ 15 600 = $0,77<br>CR = 390 ÷ 15 600 = 2,5%<br>CPA = 12 000 ÷ 390 = $30,77<br>AOV = 42 900 ÷ 390 = $110<br>ROAS = 42 900 ÷ 12 000 = 3,58"},
+ {q:"Маржа продукту 35%. Клієнт має ROAS 2,6. Він у плюсі чи мінусі? Який мінімальний ROAS йому потрібен?",a:"Break-even ROAS = 1 ÷ 0,35 ≈ 2,86. ROAS 2,6 нижче — клієнт у мінусі, хоч реклама «окупається» по виручці."},
+ {q:"Клієнт хоче CPA не більше $40. Зараз CPM $15, CTR 1,2%, CR 2%. Влізаємо?",a:"CPC = 15 ÷ (1,2 × 10) = $1,25. CPA = CPC ÷ CR = 1,25 ÷ 0,02 = $62,50. Не влізаємо. Щоб вийти на $40, треба, наприклад, підняти CR до ~3,1% або CTR до ~1,9% при тому ж CPM."},
+ {q:"Комісія агентства 3,5%. Три клієнти поповнили за місяць $18 000, $42 000 і $9 500. Дохід агентства?",a:"Разом 69 500 × 0,035 = $2 432,50."},
+ {q:"Денний бюджет групи $400. Скільки Meta максимально може витратити за один день і за тиждень?",a:"За день — до ~75% більше: до $700. За 7 днів — не більше 7 × 400 = $2 800."},
+ {q:"Клієнт витрачає $2 000/день із ROAS 3. Він хоче $5 000/день. Як ви порадите масштабуватись і що станеться з ROAS?",a:"Плавно: +20% кожні 2–3 дні на робочих групах, плюс нові групи/гео/креативи. ROAS при масштабуванні майже завжди трохи падає (ширша, «холодніша» аудиторія), тому важливо знати break-even клієнта і контролювати щотижня."},
+ {q:"Покази 500 000, охоплення 80 000, CTR упав з 1,6% до 0,7% за 10 днів. Діагноз і рішення?",a:"Частота = 6,25 — аудиторія бачила рекламу забагато разів, креатив вигорів. Рішення: нові креативи (3–5 варіантів), розширити аудиторію, прибрати оголошення з найнижчим CTR."},
+ {q:"Баланс акаунта клієнта $2 600, середній спенд за останні 3 дні $1 300/день. Коли треба нагадати про поповнення?",a:"Грошей вистачить на 2 дні. Нагадати сьогодні, бо поповнення потребує часу (переказ, зарахування). Добра практика — тримати запас мінімум на 2–3 дні спенду."}
+];
+
+/* ---------- mock report ---------- */
+const REPORT=[
+ {n:"PL | Broad | Video A",sp:4200,im:380000,cl:5320,pu:168,rev:15120},
+ {n:"PL | LAL 1% | Image B",sp:2600,im:205000,cl:1640,pu:41,rev:3485},
+ {n:"CZ | Broad | Video A",sp:1800,im:240000,cl:3600,pu:72,rev:6120},
+ {n:"PL | Retarget 30d | Carousel",sp:900,im:60000,cl:1500,pu:63,rev:5355},
+ {n:"RO | Broad | Image C",sp:1500,im:300000,cl:1200,pu:9,rev:675}
+];
+
+/* ---------- interview ---------- */
+const IQ=[
+ {q:"Розкажіть про себе (1–2 хвилини)",a:"3,5+ роки в digital: Kykil Agency — 100+ вебпроєктів, робота з клієнтами від брифу до запуску, команда 8–10 людей. У Kofax вів вебпроєкти і рекламні проєкти (Meta, Google, TikTok Ads) як PM і будував відділ продажів: брифи, КП, переговори, CRM. Сильні сторони — комунікація з клієнтами, швидке вирішення проблем і системність. Зараз у Варшаві, готовий на гібрид."},
+ {q:"Який у вас досвід з Meta Ads?",a:"Чесно і з мостиком: «У Kofax я продавав і координував рекламні проєкти в Meta: збирав брифи, ставив задачі таргетологам, разом з ними розбирав звіти для клієнтів. Сам кампанії не налаштовував, але структуру кабінету, метрики і логіку оптимізації розумію, і перед співбесідою глибоко пройшов кабінет і метрики. Готовий показати на прикладі, як розбираю звіт.» — далі покажіть розбір цифр."},
+ {q:"Які метрики головні і що вони означають?",a:"CPM — ціна аукціону, CTR — наскільки чіпляє креатив, CPC — ціна кліку, CR — якість сайту й оферу, CPA — ціна результату, ROAS — окупність по виручці, ROI — по прибутку. Ланцюжок: CPA = CPC ÷ CR, а CPC = CPM ÷ (CTR × 10). Тому коли CPA росте, я дивлюсь, яка ланка зламалась."},
+ {q:"У клієнта виріс CPA. Що будете робити?",a:"Розкладу на CPM → CTR → CR і знайду, що змінилось (див. кейс у розділі «Кейси»). Подивлюсь breakdown по гео, плейсментах, віку; частоту; чи не було суттєвих змін, що перезапустили навчання; чи працює піксель. Потім — висновок клієнту і 2–3 кроки."},
+ {q:"Що робите, якщо клієнт довго не поповнює акаунт?",a:"Слідкую за балансом проактивно: рахую, на скільки днів вистачить грошей при поточному спенді, і нагадую заздалегідь. Якщо клієнт затягує — з'ясовую причину: результати, гроші, організаційне. Пропоную рішення, бо зупинка реклами шкодить і клієнту, і нам."},
+ {q:"Як будете збільшувати спенд клієнтів (upsell)?",a:"Спочатку розумію цілі клієнта і його точку беззбитковості. Ріст спенду має бути вигідним клієнту, інакше він піде. Варіанти: нові гео й акаунти, нові платформи (TikTok, Google), вищі ліміти, швидші поповнення, умови за обсяг. Регулярні зустрічі з цифрами — там і з'являються можливості."},
+ {q:"Клієнт агресивний і звинувачує вас у бані. Ваші дії?",a:"Спокійно вислуховую, не сперечаюсь. Показую, що вже дію: перевіряю причину, подаю апеляцію, видаю резерв. Пояснюю строки. Після — разом розбираємо причину, щоб не повторилось. З Kykil знаю: з емоційним клієнтом працює швидкість і конкретика."},
+ {q:"Як ви ведете звітність?",a:"В Excel/Google Sheets: спенд, поповнення, баланси, основні метрики, динаміка тиждень до тижня, проблеми і домовленості. Задачі і статуси — у Trello. У Kofax я сам будував CRM і звітність для кількох відділів, тож для мене це природно."},
+ {q:"Як ви працюєте з кількома клієнтами одночасно?",a:"Пріоритезую за ризиком і обсягом: спочатку те, що зупиняє рекламу (бан, баланс), далі великі клієнти, далі планові задачі. Щоденний чек балансів і статусів, щотижневий звіт. У Kykil вів паралельно десятки проєктів."},
+ {q:"Чому саме ця вакансія?",a:"Мені близька робота з клієнтами і цифрами водночас, а performance-маркетинг з великими бюджетами — напрям, у якому хочу рости. Ваша модель прямо пов'язана з ростом клієнтів, а я вмію будувати довгі стосунки й процеси. Плюс я у Варшаві й можу працювати гібридно."},
+ {q:"Ваша англійська?",a:"B1: читаю документацію й переписуюсь з клієнтами вільно, у розмові можу помилятись, але донесу думку. Активно підтягую до B2."},
+ {q:"Які у вас слабкі сторони?",a:"Не було практики власноруч налаштовувати кампанії в Meta. Закриваю це: вже вивчив кабінет, метрики і типові проблеми, і в перші тижні хочу пройти внутрішнє навчання та посидіти поруч із медіабаєрами. Швидко вчусь — у Kofax за кілька місяців зібрав CRM з нуля."}
+];
+const ASK=["Хто основні клієнти: медіабаєри, бренди, афіліати? Які вертикалі найбільші?","Скільки клієнтів і який сумарний спенд веде один Account Manager?","Як влаштовані поповнення: хто проводить, за скільки часу зараховуються, які способи оплати?","Які ставки комісії і чи змінюються вони від обсягу?","Що відбувається при бані: як швидко видається заміна, хто подає апеляції?","За якими KPI оцінюють Account Manager? Чи є бонус від росту спенду?","Як виглядає тестове завдання і які інструменти, крім Excel і Trello?","Як проходить навчання в перші тижні?"];
+const EN=[["Your account balance is running low. Please top up to avoid any interruption.","Баланс акаунта закінчується. Будь ласка, поповніть, щоб реклама не зупинилась."],["The top-up has been credited to your ad account.","Поповнення зараховано на ваш рекламний акаунт."],["I'm already looking into it and will get back to you within 15 minutes.","Вже розбираюсь і повернусь до вас протягом 15 хвилин."],["The account was disabled. We've submitted an appeal and prepared a backup account.","Акаунт заблоковано. Ми подали апеляцію і підготували резервний акаунт."],["Your CPA increased because CPM went up. Let's test new creatives.","CPA зріс через ріст CPM. Пропоную протестувати нові креативи."],["Could you share access to your Business Manager?","Можете надати доступ до вашого Business Manager?"],["Let's schedule a weekly call to review the results.","Давайте поставимо щотижневий дзвінок для розбору результатів."],["How much are you planning to spend next month?","Скільки плануєте витратити наступного місяця?"]];
+
+/* ---------- PLAN ---------- */
+const PLAN=[
+ ["0:00–0:20","Розділ «Компанія і роль»: зрозуміти, що таке агентські акаунти і що робить AM у Tech4You"],
+ ["0:20–1:00","Словник: прочитати всі терміни, особливо «Метрики» і «Агентські акаунти»"],
+ ["1:00–1:30","Формули: вивчити 7 формул, погратись з калькулятором"],
+ ["1:30–2:00","Кабінет Meta: структура, цілі, фаза навчання, статуси"],
+ ["2:00–2:30","Тренажер цифр: 10 правильних відповідей поспіль"],
+ ["2:30–3:00","Розбір звіту: знайти, що масштабувати і що вимикати"],
+ ["3:00–3:30","Кейси: проговорити вголос 3–4 кейси"],
+ ["3:30–4:00","Тест: набрати 26+ з 30"],
+ ["Ввечері","Картки: пройти всі, поки не буде 80%+ «знаю»"],
+ ["Ввечері","Співбесіда: проговорити вголос відповіді і питання до них"],
+ ["Ранок","Шпаргалка: перечитати за 30 хвилин до співбесіди"]
+];
+
+
+
+const CATCOL={metric:"blue",cab:"purple",track:"orange",agency:"green",biz:"pink"};
+
+/* ---------- pages ---------- */
+const PAGES=[
+ {id:"plan",ic:"🎯",name:"План підготовки",grp:"Старт",time:"5 хв",type:["Старт","blue"]},
+ {id:"company",ic:"🏢",name:"Компанія і роль",grp:"Старт",time:"20 хв",type:["Контекст","gray"]},
+ {id:"gloss",ic:"📖",name:"Словник",grp:"Теорія",time:"40 хв",type:["База","purple"]},
+ {id:"formulas",ic:"🧮",name:"Формули і калькулятор",grp:"Теорія",time:"30 хв",type:["База","purple"]},
+ {id:"cabinet",ic:"🗂️",name:"Кабінет Meta Ads",grp:"Теорія",time:"30 хв",type:["База","purple"]},
+ {id:"report",ic:"📊",name:"Розбір звіту",grp:"Практика",time:"30 хв",type:["Практика","orange"]},
+ {id:"cases",ic:"🧩",name:"Кейси",grp:"Практика",time:"30 хв",type:["Практика","orange"]},
+ {id:"drill",ic:"🔢",name:"Тренажер цифр",grp:"Практика",time:"30 хв",type:["Практика","orange"]},
+ {id:"quiz",ic:"✅",name:"Тест",grp:"Перевірка",time:"20 хв",type:["Перевірка","green"]},
+ {id:"cards",ic:"🃏",name:"Картки",grp:"Перевірка",time:"20 хв",type:["Перевірка","green"]},
+ {id:"interview",ic:"💬",name:"Співбесіда",grp:"Співбесіда",time:"40 хв",type:["Співбесіда","pink"]},
+ {id:"cheat",ic:"⚡",name:"Шпаргалка",grp:"Співбесіда",time:"10 хв",type:["Ранок","yellow"]}
+];
+const P=Object.fromEntries(PAGES.map(p=>[p.id,p]));
+const doneMap=()=>store.get("done",{});
+
+/* ---------- page bodies ---------- */
+function bPlan(){
+ const done=store.get("plan",[]);const n=done.filter(Boolean).length;
+ return `<div class="callout blue"><span class="ci">💡</span><div><p><b>Головна думка.</b> Вас беруть не налаштовувати рекламу, а вести клієнтів, які її налаштовують. Тімлід перевірятиме, чи ви розумієте <b>мову медіабаєра</b>: метрики, кабінет, причини проблем. Це реально вивчити за день.</p></div></div>
+ <h2 class="b">Чекліст на сьогодні</h2>
+ <div class="row" style="gap:10px"><div class="bar" style="flex:1;min-width:120px"><i style="width:${n/PLAN.length*100}%"></i></div><span class="mono muted">${n}/${PLAN.length}</span></div>
+ <div>${PLAN.map((p,i)=>`<label class="todo"><input type="checkbox" id="plan-${i}" data-plan="${i}" ${done[i]?"checked":""}><span><span class="tm">${p[0]}</span>${p[1]}</span></label>`).join("")}</div>
+ <h2 class="b">Три речі, які треба пам'ятати</h2>
+ <div class="cols">
+  <div class="box"><h4>🗣️ Про брак досвіду</h4><p class="muted">Не приховуйте і не перебільшуйте: «руками кампанії не запускав, але координував рекламні проєкти в Meta, розумію метрики і кабінет — ось як я розбираю звіт…»</p></div>
+  <div class="box"><h4>🧮 Одна формула</h4><p class="muted"><span class="mono">CPA = CPM ÷ (CTR × 10) ÷ CR</span>. Пояснює майже будь-яку проблему: аукціон, креатив чи сайт.</p></div>
+  <div class="box"><h4>🏆 Ваші козирі</h4><p class="muted">3,5+ роки з клієнтами, продажі й КП, CRM і звітність, Варшава і гібрид, вміння розташовувати людей.</p></div>
+ </div>`;
+}
+function bCompany(){
+ return `<p>Українська маркетингова екосистема і growth-партнер для performance-бізнесів з бюджетами від <b>$100K на місяць</b>. Допомагають клієнтам рости на соцплатформах, поєднуючи експертизу в платформах, фінансах і даних. Клієнти — лідери в EdTech, E-commerce, Affiliate Marketing і Retail.</p>
+ <div class="callout yellow"><span class="ci">🔎</span><div><p>Судячи з обов'язків («ставки», «поповнення рекламних кабінетів», «збільшення спенду»), основний продукт — <b>агентські рекламні акаунти</b> та фінансування реклами. Уточніть це на співбесіді: таке питання покаже, що ви розібрались у бізнесі.</p></div></div>
+ <h2 class="b">Як заробляє агентство</h2>
+ <div class="flow"><span class="st">Клієнт отримує агентський акаунт</span><span class="ar">→</span><span class="st">Поповнює баланс через агентство</span><span class="ar">→</span><span class="st">Агентство бере комісію</span><span class="ar">→</span><span class="st"><b>Більше спенд = більше дохід</b></span></div>
+ <p>Тому Account Manager відповідає за три речі: клієнт <b>залишається</b>, <b>не зупиняється</b> (баланс, бани, доступи) і <b>росте</b> (upsell).</p>
+ <h2 class="b">Обов'язки → що це означає</h2>
+ <div class="tbl"><table><thead><tr><th>З вакансії</th><th>Простими словами</th></tr></thead><tbody>
+  <tr><td>Супровід і розвиток проєктів</td><td>Щоденний контакт, відповіді, вирішення питань</td></tr>
+  <tr><td>Онбординг нових клієнтів</td><td>Пояснити правила і ставки, познайомити з командою, видати акаунти</td></tr>
+  <tr><td>Контроль поповнень</td><td>Стежити за балансами, щоб реклама не зупинялась</td></tr>
+  <tr><td>Збільшення спенду (upsell)</td><td>Допомагати клієнтам вигідно витрачати більше</td></tr>
+  <tr><td>Проблемні ситуації</td><td>Бани, відхилення, спори щодо грошей</td></tr>
+  <tr><td>Звітність</td><td>Excel і Trello</td></tr></tbody></table></div>
+ <h2 class="b">Вимоги → ваш статус</h2>
+ <div class="tbl"><table><thead><tr><th>Вимога</th><th>Статус</th></tr></thead><tbody>
+  <tr><td>2+ роки з клієнтами в digital</td><td><span class="tag green">Є</span> Kykil, Kofax</td></tr>
+  <tr><td>Впевнена робота з кабінетом Meta Ads</td><td><span class="tag yellow">Вчимо</span></td></tr>
+  <tr><td>Google / TikTok Ads (плюс)</td><td><span class="tag green">Є</span> продавали й координували</td></tr>
+  <tr><td>CPM, CPC, CPA, CTR, ROI, ROAS</td><td><span class="tag yellow">Вчимо</span></td></tr>
+  <tr><td>Excel / Sheets, CRM, таск-менеджери</td><td><span class="tag green">Є</span></td></tr>
+  <tr><td>Бюджети $10k+/міс</td><td><span class="tag orange">Чесно</span> як координатор</td></tr>
+  <tr><td>Англійська B1</td><td><span class="tag green">Є</span></td></tr></tbody></table></div>
+ <h2 class="b">Умови</h2>
+ <p>$1 500–2 000 (на адаптації 3 місяці — $2 000), гібрид у Варшаві, 10:00–19:00 за варшавським часом, повна зайнятість, є тестове завдання.</p>`;
+}
+let gl={cat:"all",q:"",view:store.get("glView","table")};
+function glItems(){const q=gl.q.trim().toLowerCase();return GL.map((g,i)=>({...g,i})).filter(g=>(gl.cat==="all"||g.c===gl.cat)&&(!q||(g.t+" "+g.ua+" "+g.s).toLowerCase().includes(q)))}
+function bGloss(){
+ return `<p class="muted">${GL.length} термінів. Натисніть на рядок, щоб відкрити деталі збоку. Почніть з «Метрик» і «Агентських акаунтів».</p>
+ <div class="db-bar">
+  <button class="view" data-view="table" aria-pressed="${gl.view==="table"}">▤ Таблиця</button>
+  <button class="view" data-view="gallery" aria-pressed="${gl.view==="gallery"}">▦ Галерея</button>
+  <span class="sp"></span><input class="db-search" id="gl-search" type="search" placeholder="Пошук…" value="${gl.q.replace(/"/g,"&quot;")}">
+ </div>
+ <div class="row" style="padding:8px 0"><button class="filter" data-cat="all" aria-pressed="${gl.cat==="all"}">Усі</button>${Object.entries(CATS).map(([k,v])=>`<button class="filter" data-cat="${k}" aria-pressed="${gl.cat===k}">${v}</button>`).join("")}</div>
+ <div id="gl-list"></div>`;
+}
+function fillGloss(){
+ const it=glItems();const el=$("#gl-list");if(!el)return;
+ if(!it.length){el.innerHTML=`<p class="muted" style="padding:12px 0">Нічого не знайдено.</p>`;return}
+ if(gl.view==="table") el.innerHTML=`<div class="tbl"><table><thead><tr><th>Аа Термін</th><th>Українською</th><th>Категорія</th><th>Формула</th></tr></thead><tbody>${it.map(g=>`<tr class="dbrow" data-term="${g.i}" tabindex="0"><td><b>${g.t}</b><span class="open-hint">Відкрити</span></td><td>${g.ua}</td><td><span class="tag ${CATCOL[g.c]}">${CATS[g.c]}</span></td><td class="mono" style="font-size:12.5px;color:var(--muted)">${g.f||""}</td></tr>`).join("")}</tbody></table></div><div class="db-count">Кількість: ${it.length}</div>`;
+ else el.innerHTML=`<div class="gallery">${it.map(g=>`<button class="gcard" data-term="${g.i}"><b>${g.t}</b><span class="tag ${CATCOL[g.c]}" style="align-self:flex-start">${CATS[g.c]}</span><p>${g.s}</p></button>`).join("")}</div><div class="db-count">Кількість: ${it.length}</div>`;
+}
+let peekI=null;
+function openPeek(i){
+ peekI=i;const g=GL[i];
+ $("#peekBody").innerHTML=`<h1>${g.t}</h1>
+ <div class="props" style="margin:0;padding-bottom:12px"><div class="prop"><span class="k">≡ Українською</span><span class="v">${g.ua}</span></div><div class="prop"><span class="k">◉ Категорія</span><span class="v"><span class="tag ${CATCOL[g.c]}">${CATS[g.c]}</span></span></div></div>
+ <p>${g.s}</p>${g.f?`<div class="fx">${g.f}</div>`:""}
+ <div class="callout"><span class="ci">📌</span><div><p><b>Приклад.</b> ${g.ex}</p></div></div>`;
+ const pk=$("#peek");pk.classList.add("on");pk.setAttribute("aria-hidden","false");$("#peekClose").focus();
+}
+function closePeek(){const pk=$("#peek");pk.classList.remove("on");pk.setAttribute("aria-hidden","true");peekI=null}
+function stepPeek(d){const it=glItems();if(!it.length)return;let k=it.findIndex(g=>g.i===peekI);k=(k+d+it.length)%it.length;openPeek(it[k].i)}
+function bFormulas(){
+ const F=[["CPM","Spend ÷ Impressions × 1000","Ціна 1000 показів"],["CTR","Clicks ÷ Impressions × 100%","Наскільки чіпляє реклама"],["CPC","Spend ÷ Clicks","Ціна кліку"],["CR","Conversions ÷ Clicks × 100%","Наскільки продає сайт"],["CPA","Spend ÷ Conversions","Ціна результату"],["ROAS","Revenue ÷ Spend","Виручка на $1 реклами"],["ROI","(Profit − Cost) ÷ Cost × 100%","Прибуток на $1"],["Frequency","Impressions ÷ Reach","Скільки разів бачили"],["Break-even ROAS","1 ÷ Margin","Мінімальний ROAS без збитку"],["AOV","Revenue ÷ Purchases","Середній чек"]];
+ return `<div class="tbl"><table><thead><tr><th>Метрика</th><th>Формула</th><th>Що показує</th></tr></thead><tbody>${F.map(f=>`<tr><td><b>${f[0]}</b></td><td class="mono">${f[1]}</td><td>${f[2]}</td></tr>`).join("")}</tbody></table></div>
+ <div class="callout blue"><span class="ci">🔗</span><div><p><b>Ланцюжок напам'ять:</b> <span class="mono">CPA = CPC ÷ CR</span>, а <span class="mono">CPC = CPM ÷ (CTR × 10)</span>. CPA залежить від трьох речей: ціни аукціону (CPM), креативу (CTR) і сайту (CR). Коли CPA росте — шукайте, яка з трьох зламалась.</p></div></div>
+ <h2 class="b">Калькулятор</h2><p class="muted">Змінюйте цифри — метрики перераховуються одразу.</p>
+ <div class="calc">
+  <label class="lbl">Spend, $<input class="inp" type="number" id="c-sp" value="5000" min="0"></label>
+  <label class="lbl">Impressions<input class="inp" type="number" id="c-im" value="450000" min="0"></label>
+  <label class="lbl">Reach<input class="inp" type="number" id="c-re" value="150000" min="0"></label>
+  <label class="lbl">Link clicks<input class="inp" type="number" id="c-cl" value="5400" min="0"></label>
+  <label class="lbl">Покупки / ліди<input class="inp" type="number" id="c-cv" value="135" min="0"></label>
+  <label class="lbl">Виручка, $<input class="inp" type="number" id="c-rv" value="16200" min="0"></label>
+  <label class="lbl">Маржа, %<input class="inp" type="number" id="c-mg" value="40" min="0" max="100"></label>
+ </div>
+ <div class="kpis" id="c-out" style="margin-top:8px"></div>
+ <div id="c-verdict"></div>
+ <h2 class="b">Орієнтири</h2>
+ <div class="callout yellow"><span class="ci">⚠️</span><div><p>Дуже залежать від ніші, гео і сезону. На співбесіді кажіть: «залежить від гео і ніші, але орієнтир такий…»</p></div></div>
+ <ul><li><b>Link CTR:</b> ~1% і вище — нормально; нижче 0,5% — креатив не чіпляє.</li><li><b>CPM:</b> у США й Західній Європі помітно вищий, ніж у Східній Європі, Азії чи Латамі; у 4 кварталі росте.</li><li><b>CR e-commerce:</b> 1–3% типово.</li><li><b>Frequency:</b> понад 3–4 за тиждень на холодну аудиторію + падіння CTR = вигорання.</li><li><b>ROAS:</b> «добрий» тільки відносно break-even клієнта.</li></ul>`;
+}
+function calc(){
+ const v=id=>parseFloat($("#"+id).value)||0;
+ const sp=v("c-sp"),im=v("c-im"),re=v("c-re"),cl=v("c-cl"),cv=v("c-cv"),rv=v("c-rv"),mg=v("c-mg")/100;
+ const cpm=sp/im*1000,ctr=cl/im*100,cpc=sp/cl,cr=cv/cl*100,cpa=sp/cv,roas=rv/sp,fr=im/re,aov=rv/cv,be=1/mg,profit=rv*mg-sp,roi=profit/sp*100;
+ const k=[["CPM",usd(cpm),"ціна 1000 показів"],["CTR",pct(ctr),"клікабельність"],["CPC",usd(cpc),"ціна кліку"],["CR",pct(cr),"конверсія сайту"],["CPA",usd(cpa),"ціна результату"],["ROAS",fmt(roas),"виручка / спенд"],["Frequency",fmt(fr),"покази / охоплення"],["AOV",usd(aov),"середній чек"],["Break-even ROAS",fmt(be),"при маржі "+Math.round(mg*100)+"%"],["ROI",pct(roi,1),"прибуток "+usd(profit,0)]];
+ $("#c-out").innerHTML=k.map(x=>`<div class="kpi"><small>${x[0]}</small><b>${x[1]}</b><span>${x[2]}</span></div>`).join("");
+ let vd="";
+ if(isFinite(roas)&&isFinite(be)) vd= roas>=be?`<div class="callout green"><span class="ci">✅</span><div><p>ROAS ${fmt(roas)} вище точки беззбитковості ${fmt(be)} — клієнт у плюсі, можна обережно масштабувати.</p></div></div>`:`<div class="callout red"><span class="ci">⛔</span><div><p>ROAS ${fmt(roas)} нижче точки беззбитковості ${fmt(be)} — клієнт у мінусі. Спочатку виправити CPA, потім масштабувати.</p></div></div>`;
+ if(fr>4) vd+=`<div class="callout yellow"><span class="ci">🔥</span><div><p>Частота ${fmt(fr)} — ризик вигорання креативу.</p></div></div>`;
+ $("#c-verdict").innerHTML=vd;
+}
+function bCabinet(){
+ const OBJ=[["Awareness","Впізнаваність","Показати рекламу якнайбільшій кількості людей","Новий бренд, охоплення"],["Traffic","Трафік","Привести людей на сайт","Контент; для продажів слабо"],["Engagement","Взаємодія","Лайки, коментарі, повідомлення, перегляди","Активність, переписки"],["Leads","Ліди","Заявки: форми, дзвінки, реєстрації","Школи, послуги"],["App promotion","Застосунок","Встановлення і дії в застосунку","Мобільні застосунки"],["Sales","Продажі","Покупки на сайті, в каталозі","E-commerce, основна ціль клієнтів $10k+"]];
+ return `<h2 class="b" style="margin-top:0">Структура</h2>
+ <div class="tree">
+  <div><span class="tl">🏢</span><span><b>Business Manager / Business portfolio</b> <small>— «папка» компанії: акаунти, сторінки, Instagram, пікселі, люди і доступи</small></span></div>
+  <div><span class="tl">└─ 💳</span><span><b>Ad account</b> <small>— валюта, часовий пояс, оплата, ліміт, статус. Саме ці акаунти видає агентство</small></span></div>
+  <div><span class="tl">   └─ 🎯</span><span><b>Campaign</b> <small>— ціль, бюджет кампанії (CBO), Special ad category</small></span></div>
+  <div><span class="tl">      └─ 👥</span><span><b>Ad set</b> <small>— аудиторія, гео, плейсменти, подія оптимізації, ставки, бюджет (ABO)</small></span></div>
+  <div><span class="tl">         └─ 🖼️</span><span><b>Ad</b> <small>— креатив, текст, заголовок, кнопка, посилання, UTM</small></span></div>
+ </div>
+ <div class="quote">Кампанія = <b>ЩО</b> хочемо. Група = <b>КОМУ і ДЕ</b>. Оголошення = <b>ЩО показуємо</b>.</div>
+ <h2 class="b">6 цілей кампанії</h2>
+ <div class="tbl"><table><thead><tr><th>Ціль</th><th>Українською</th><th>Що шукає Meta</th><th>Для кого</th></tr></thead><tbody>${OBJ.map(o=>`<tr><td><b>${o[0]}</b></td><td>${o[1]}</td><td>${o[2]}</td><td>${o[3]}</td></tr>`).join("")}</tbody></table></div>
+ <h2 class="b">Ads Manager щодня</h2>
+ <ul><li><b>Колонки:</b> Delivery, Amount spent, Results, Cost per result, Impressions, Reach, Frequency, CPM, Link clicks, CTR (link), CPC (link), Purchase ROAS. Через Columns → Customize columns.</li><li><b>Breakdown:</b> вік, стать, країна, плейсмент, пристрій, час — щоб знайти, що тягне вниз.</li><li><b>Compare:</b> тиждень до попереднього тижня.</li><li><b>Рівні:</b> кампанії → групи → оголошення.</li></ul>
+ <h2 class="b">Статуси в колонці Delivery</h2>
+ <div class="tbl"><table><tbody>
+  <tr><td><span class="tag green">Active</span></td><td>Крутиться</td></tr>
+  <tr><td><span class="tag blue">Learning</span></td><td>Навчається: ~50 подій за 7 днів</td></tr>
+  <tr><td><span class="tag yellow">Learning limited</span></td><td>Не добирає подій: малий бюджет, вузька аудиторія, «важка» подія</td></tr>
+  <tr><td><span class="tag">In review</span></td><td>На модерації</td></tr>
+  <tr><td><span class="tag red">Rejected</span></td><td>Відхилено — виправити або Request review</td></tr>
+  <tr><td><span class="tag red">Not delivering</span></td><td>Не показується: баланс, ліміт, оплата, розклад, статус акаунта</td></tr></tbody></table></div>
+ <details class="tg"><summary><span class="sm">Фаза навчання — що її «ламає»</span></summary><div class="tb"><ul><li>Зміна аудиторії, креативу, події оптимізації, стратегії ставок</li><li>Різке підняття чи зниження бюджету</li><li>Пауза 7+ днів</li></ul><p class="muted">Тому масштабують плавно (~20% за раз) або горизонтально: нові групи, гео, акаунти.</p></div></details>
+ <details class="tg"><summary><span class="sm">Трекінг: Pixel, CAPI, Events Manager, атрибуція</span></summary><div class="tb"><ul><li><b>Pixel</b> — код на сайті, бачить дії людей.</li><li><b>CAPI</b> — події з сервера, доповнює піксель.</li><li><b>Events Manager</b> — перевірка, чи доходять Purchase/Lead.</li><li><b>Атрибуція</b> — за замовчуванням 7 днів після кліку + 1 день після перегляду.</li></ul></div></details>
+ <details class="tg"><summary><span class="sm">Акаунт і гроші</span></summary><div class="tb"><ul><li><b>Spending limit</b> — стеля витрат; досягли → реклама стоп.</li><li><b>Billing</b> — картка з порогом, передплата або кредитна лінія агентства.</li><li><b>Account Quality</b> — бани, обмеження, апеляції (Request review).</li><li><b>Ролі</b> — у БМ повний і частковий доступ; на рівні акаунта: керування, реклама, тільки аналітика.</li></ul></div></details>
+ <details class="tg"><summary><span class="sm">Чому банять і що порадити клієнту</span></summary><div class="tb"><ul><li>Заборонені товари, оманливі обіцянки, «до/після», звернення до особистих атрибутів.</li><li>Фінанси / працевлаштування без Special ad category.</li><li>Невідповідність оголошення і сайту, клоакінг, підозріла оплата.</li><li>Поради: правила Meta (Advertising Standards), чисті креативи, верифікований бізнес, стабільна оплата, не міняти все одночасно.</li></ul></div></details>
+ <div class="callout green" style="margin-top:8px"><span class="ci">🧪</span><div><p>Безкоштовно потренуйтесь: створіть свій Business portfolio на <span class="mono">business.facebook.com</span> і пройдіть Ads Manager до кроку оплати, не запускаючи рекламу. Також є безкоштовні курси Meta Blueprint.</p></div></div>`;
+}
+function bReport(){
+ const t=REPORT.reduce((a,r)=>({sp:a.sp+r.sp,im:a.im+r.im,cl:a.cl+r.cl,pu:a.pu+r.pu,rev:a.rev+r.rev}),{sp:0,im:0,cl:0,pu:0,rev:0});
+ return `<p class="muted">Звіт клієнта за 7 днів. Маржа клієнта 40%, отже break-even ROAS = 2,5. Спробуйте відповісти самі, потім розгорніть відповідь.</p>
+ <div class="tbl"><table><thead><tr><th>Група оголошень</th><th class="n">Spend</th><th class="n">Impr.</th><th class="n">CPM</th><th class="n">Clicks</th><th class="n">CTR</th><th class="n">CPC</th><th class="n">Purch.</th><th class="n">CR</th><th class="n">CPA</th><th class="n">ROAS</th></tr></thead>
+ <tbody>${REPORT.map(r=>{const roas=r.rev/r.sp;const cls=roas>=3?"green":roas>=2.5?"yellow":"red";return `<tr><td>${r.n}</td><td class="n">${usd(r.sp,0)}</td><td class="n">${fmt(r.im,0)}</td><td class="n">${usd(r.sp/r.im*1000)}</td><td class="n">${fmt(r.cl,0)}</td><td class="n">${pct(r.cl/r.im*100)}</td><td class="n">${usd(r.sp/r.cl)}</td><td class="n">${r.pu}</td><td class="n">${pct(r.pu/r.cl*100)}</td><td class="n">${usd(r.sp/r.pu)}</td><td class="n"><span class="tag ${cls}">${fmt(roas)}</span></td></tr>`}).join("")}
+ <tr><td><b>Разом</b></td><td class="n"><b>${usd(t.sp,0)}</b></td><td class="n">${fmt(t.im,0)}</td><td class="n">${usd(t.sp/t.im*1000)}</td><td class="n">${fmt(t.cl,0)}</td><td class="n">${pct(t.cl/t.im*100)}</td><td class="n">${usd(t.sp/t.cl)}</td><td class="n">${t.pu}</td><td class="n">${pct(t.pu/t.cl*100)}</td><td class="n">${usd(t.sp/t.pu)}</td><td class="n"><b>${fmt(t.rev/t.sp)}</b></td></tr></tbody></table></div>
+ ${[["1. Клієнт загалом у плюсі?","Загальний ROAS ≈ 2,8 при break-even 2,5 — так, у невеликому плюсі. Але одна група тягне вниз."],
+  ["2. Що масштабувати?","<b>PL | Broad | Video A</b> (ROAS 3,6, найбільший обсяг) — піднімати бюджет поступово, ~20% кожні 2–3 дні. <b>Retarget 30d</b> (ROAS 5,95) — дуже вигідна, але аудиторія мала. <b>CZ | Broad | Video A</b> (ROAS 3,4, дешевий CPM) — гарний кандидат для росту: той самий креатив працює в новому гео."],
+  ["3. Що вимикати або виправляти?","<b>RO | Broad | Image C</b>: CTR 0,4%, CR 0,75%, CPA $167, ROAS 0,45 — вимкнути або замінити креатив на Video A. <b>PL | LAL 1% | Image B</b>: ROAS 1,34 — нижче беззбитковості, CTR 0,8% — слабкий креатив; спробувати Video A на цій аудиторії або скоротити бюджет."],
+  ["4. Висновок про креативи?","Video A працює в обох країнах (CTR 1,4–1,5%), картинки B і C слабші. Варто зробити ще 2–3 відео в стилі Video A."],
+  ["5. Що написати клієнту?","«За тиждень ROAS 2,8 при точці беззбитковості 2,5 — у плюсі. Пропоную: 1) вимкнути RO | Image C (ROAS 0,45); 2) поступово масштабувати PL і CZ на Video A; 3) зробити 2–3 нові відео в стилі Video A. Спенд після змін плануємо підняти з ~$11k до ~$14k на тиждень. Перевіримо результати в понеділок.»"]
+ ].map(x=>`<details class="tg"><summary><span class="sm">${x[0]}</span></summary><div class="tb"><p>${x[1]}</p></div></details>`).join("")}
+ <h2 class="b">Шаблон звіту AM у Google Sheets</h2>
+ <p><b>Колонки:</b> Клієнт · Акаунт · Баланс · Спенд за тиждень · Спенд мин. тижня · Зміна % · Поповнення · Комісія · Статус акаунта · Проблеми · Наступний крок · Дата контакту.</p>
+ <ul><li><code>=IFERROR(B2/C2*1000;0)</code> — CPM</li><li><code>=IFERROR(D2/C2;0)</code> — CTR (формат %)</li><li><code>=IFERROR((E2-F2)/F2;0)</code> — зміна тиждень до тижня</li><li><code>=SUMIF(A:A;"Клієнт 1";E:E)</code> — сума спенду клієнта</li><li><code>=ROUND(E2*0,04;2)</code> — комісія 4%</li></ul>
+ <p class="muted">Ще знадобиться: зведена таблиця, умовне форматування (червоний, якщо спенд упав понад 30%), фільтри, графік спенду по тижнях. У Sheets з українською локаллю аргументи розділяє «;», в англійській — «,».</p>`;
+}
+function bCases(){
+ return `<div class="callout purple"><span class="ci">🧭</span><div><p>Структура будь-якої відповіді: <b>швидко відреагувати → знайти причину в цифрах → дати рішення → повернутись з результатом</b>. Проговоріть кожен кейс уголос.</p></div></div>
+ ${CASES.map(c=>`<details class="tg"><summary><span class="sm">${c.t}</span><span class="tag">${c.tag}</span></summary><div class="tb"><ol>${c.steps.map(s=>`<li>${s}</li>`).join("")}</ol></div></details>`).join("")}`;
+}
+let drill={q:null,streak:store.get("streak",0),best:store.get("bestStreak",0)};
+function genDrill(){
+ const r=(a,b,s=1)=>Math.round((a+Math.random()*(b-a))/s)*s;
+ const sp=r(500,20000,50),im=r(40000,1500000,1000),ctrT=r(5,25)/10,cl=Math.round(im*ctrT/100),cv=Math.max(3,Math.round(cl*r(8,40)/1000)),rv=Math.round(cv*r(30,180));
+ const T=[["CPM","$",`Spend $${fmt(sp,0)}, Impressions ${fmt(im,0)}. CPM = ?`,sp/im*1000],["CTR","%",`Impressions ${fmt(im,0)}, Link clicks ${fmt(cl,0)}. CTR = ? (%)`,cl/im*100],["CPC","$",`Spend $${fmt(sp,0)}, Link clicks ${fmt(cl,0)}. CPC = ?`,sp/cl],["CR","%",`Link clicks ${fmt(cl,0)}, покупок ${cv}. CR = ? (%)`,cv/cl*100],["CPA","$",`Spend $${fmt(sp,0)}, покупок ${cv}. CPA = ?`,sp/cv],["ROAS","",`Spend $${fmt(sp,0)}, виручка $${fmt(rv,0)}. ROAS = ?`,rv/sp]];
+ const t=T[Math.floor(Math.random()*T.length)];drill.q={name:t[0],unit:t[1],text:t[2],ans:t[3]};
+}
+function bDrill(){
+ if(!drill.q)genDrill();
+ return `<p class="muted">Випадкові задачі на формули. Рахуйте на калькуляторі телефона. Зараховується відповідь з похибкою до 2%. Мета — 10 правильних поспіль.</p>
+ <div class="qcard"><div class="row" style="justify-content:space-between"><span class="tag blue">${drill.q.name}</span><span class="mono muted" style="font-size:13px">Серія: <b>${drill.streak}</b> · рекорд: ${drill.best}</span></div>
+ <p style="font-size:18px">${drill.q.text}</p>
+ <form id="drill-form" class="row"><input class="inp" type="text" inputmode="decimal" id="drill-in" placeholder="Ваша відповідь" style="max-width:200px" autocomplete="off"><button class="btn pri" type="submit">Перевірити</button><button class="btn" type="button" id="drill-skip">Інша задача</button></form>
+ <p class="fb" id="drill-fb" aria-live="polite"></p></div>
+ <h2 class="b">Задачі з розв'язком</h2>
+ ${TASKS.map((t,i)=>`<details class="tg"><summary><span class="sm">Задача ${i+1}. ${t.q}</span></summary><div class="tb"><div class="callout green"><span class="ci">✔️</span><div><p class="mono" style="font-size:14px">${t.a}</p></div></div></div></details>`).join("")}`;
+}
+let quiz={i:0,score:0,answered:false,order:[]};
+function startQuiz(){quiz={i:0,score:0,answered:false,order:QUIZ.map((_,i)=>i).sort(()=>Math.random()-.5)}}
+function bQuiz(){
+ if(!quiz.order.length)startQuiz();
+ const best=store.get("quizBest",null);
+ if(quiz.i>=quiz.order.length){
+  const s=quiz.score,n=QUIZ.length;if(best===null||s>best)store.set("quizBest",s);
+  return `<div class="qcard" style="align-items:flex-start"><span class="big">${s}/${n}</span><p>${s>=26?"Відмінно. Ви готові до технічних питань.":s>=20?"Добре. Перечитайте пояснення до помилок і пройдіть ще раз.":"Варто ще раз пройти Словник і Формули, потім повторити тест."}</p><button class="btn pri" id="quiz-restart">Пройти ще раз</button></div>`;
+ }
+ const Q=QUIZ[quiz.order[quiz.i]];
+ return `<p class="muted">${QUIZ.length} питань у випадковому порядку. Мета — 26+ правильних.${best!==null?` Найкращий результат: <b>${best}/${QUIZ.length}</b>.`:""}</p>
+ <div class="bar"><i style="width:${quiz.i/QUIZ.length*100}%"></i></div>
+ <div class="qcard"><div class="row" style="justify-content:space-between"><span class="mono muted" style="font-size:13px">Питання ${quiz.i+1}/${QUIZ.length}</span><span class="mono muted" style="font-size:13px">Правильно: ${quiz.score}</span></div>
+ <h3 class="b" style="margin:4px 0">${Q.q}</h3><div>${Q.o.map((o,k)=>`<button class="q-opt" data-k="${k}" style="margin-top:6px">${o}</button>`).join("")}</div><div id="q-after"></div></div>`;
+}
+let cards={i:0,flip:false,mode:"all"};
+function cardDeck(){const known=store.get("known",{});return GL.map((g,i)=>({...g,i})).filter(g=>cards.mode==="all"||!known[g.i])}
+function bCards(){
+ const known=store.get("known",{});const deck=cardDeck();const kn=Object.values(known).filter(Boolean).length;
+ if(cards.i>=deck.length)cards.i=0;const g=deck[cards.i];
+ return `<p class="muted">Натисніть на картку, щоб перевернути. Знаєте <b>${kn}</b> з ${GL.length}.</p>
+ <div class="bar"><i style="width:${kn/GL.length*100}%;background:var(--t-green)"></i></div>
+ <div class="row" style="padding:6px 0"><button class="filter" data-mode="all" aria-pressed="${cards.mode==="all"}">Усі картки</button><button class="filter" data-mode="learn" aria-pressed="${cards.mode==="learn"}">Тільки ті, що вчу</button></div>
+ ${g?`<div class="fc-wrap"><div class="fc ${cards.flip?"flip":""}" id="fc" tabindex="0" role="button" aria-label="Перевернути картку">
+  <div class="fc-face"><small>${CATS[g.c]} · ${cards.i+1}/${deck.length}</small><div class="ft">${g.t}</div><small>Що це і як рахується?</small></div>
+  <div class="fc-face back"><b>${g.ua}</b><p>${g.s}</p>${g.f?`<p class="mono">${g.f}</p>`:""}<p class="muted" style="font-size:14px">${g.ex}</p></div></div></div>
+  <div class="row" style="margin-top:10px"><button class="btn" id="fc-prev">← Назад</button><button class="btn" id="fc-learn">Ще вчу</button><button class="btn pri" id="fc-know">Знаю</button><button class="btn" id="fc-next">Далі →</button></div>`
+ :`<div class="callout green"><span class="ci">🎉</span><div><p>Усі картки позначені як «Знаю».</p><button class="btn" id="fc-reset" style="align-self:flex-start">Почати заново</button></div></div>`}`;
+}
+function bInterview(){
+ return `<p class="muted">Відповіді — орієнтир, не завчайте дослівно. Говоріть своїми словами, з прикладами з Kykil і Kofax.</p>
+ <h2 class="b">Ймовірні питання</h2>
+ ${IQ.map(x=>`<details class="tg"><summary><span class="sm">${x.q}</span></summary><div class="tb"><p class="say">${x.a}</p></div></details>`).join("")}
+ <h2 class="b">Ваші питання до них</h2><p class="muted">Оберіть 3–4.</p>
+ <div>${ASK.map((a,i)=>`<label class="todo"><input type="checkbox" id="ask-${i}" data-ask="${i}" ${store.get("ask",[])[i]?"checked":""}><span>${a}</span></label>`).join("")}</div>
+ <h2 class="b">Англійська для клієнтів</h2>
+ <div class="tbl"><table><thead><tr><th>English</th><th>Українською</th></tr></thead><tbody>${EN.map(e=>`<tr><td><b>${e[0]}</b></td><td>${e[1]}</td></tr>`).join("")}</tbody></table></div>
+ <h2 class="b">Тестове завдання</h2>
+ <ul><li>Найімовірніше: таблиця з цифрами клієнта → порахувати метрики, знайти проблеми, запропонувати кроки (як у «Розборі звіту»).</li><li>Або ситуація з клієнтом: бан, просів спенд, конфлікт → лист чи план дій.</li><li>Або план онбордингу / upsell.</li><li>Оформлення: висновок зверху, цифри в таблиці, 3 конкретні кроки, строки.</li></ul>
+ <h2 class="b">Поведінка на співбесіді</h2>
+ <ul><li>Структура: ситуація → що зробив → результат.</li><li>Рахуйте вголос: тімлід дивиться на логіку, а не на швидкість.</li><li>Не знаєте — скажіть, як би з'ясували: «подивився б в Account Quality / Events Manager, уточнив би в медіабаєра».</li><li>Показуйте проактивність: «не чекаю, поки клієнт напише».</li></ul>`;
+}
+function bCheat(){
+ return `<div class="cols">
+ <div class="box"><h4>🧮 Формули</h4><p class="mono" style="font-size:13px;line-height:1.7">CPM = Spend/Impr×1000<br>CTR = Clicks/Impr×100%<br>CPC = Spend/Clicks<br>CR = Conv/Clicks×100%<br>CPA = Spend/Conv<br>ROAS = Revenue/Spend<br>ROI = (Profit−Cost)/Cost<br>Break-even = 1/Margin<br>Frequency = Impr/Reach</p></div>
+ <div class="box"><h4>🩺 Діагностика CPA</h4><p class="mono" style="font-size:13px">CPA = CPM ÷ (CTR×10) ÷ CR</p><ul><li>↑CPM → аукціон, сезон, гео</li><li>↓CTR → креатив вигорів, частота</li><li>↓CR → сайт, офер, піксель</li><li>Суттєві зміни → навчання</li></ul></div>
+ <div class="box"><h4>🗂️ Кабінет</h4><ul><li>БМ → Акаунт → Кампанія → Група → Оголошення</li><li>6 цілей: Awareness, Traffic, Engagement, Leads, App, Sales</li><li>Навчання: ~50 подій / 7 днів</li><li>Атрибуція: 7d click + 1d view</li><li>Масштаб: +~20% або горизонтально</li></ul></div>
+ <div class="box"><h4>🛑 Реклама стоїть?</h4><ol><li>Баланс</li><li>Spending limit</li><li>Оплата</li><li>Статус акаунта</li><li>Модерація</li><li>Бюджет / розклад групи</li></ol></div>
+ <div class="box"><h4>🤝 Робота AM</h4><ul><li>Утримати клієнта</li><li>Не дати зупинитись</li><li>Виростити спенд</li><li>Звіти: Excel + Trello</li><li>Дохід = комісія × спенд</li></ul></div>
+ <div class="box"><h4>🙋 Про себе</h4><p class="muted" style="font-size:14px">3,5+ роки з клієнтами в digital: 100+ проєктів у Kykil, у Kofax — рекламні проєкти Meta/Google/TikTok, продажі і CRM. Кампанії руками не запускав, але метрики і кабінет розумію і швидко вчусь. Проактивний, у Варшаві, готовий на гібрид.</p></div>
+ </div>`;
+}
+const BODY={plan:bPlan,company:bCompany,gloss:bGloss,formulas:bFormulas,cabinet:bCabinet,report:bReport,cases:bCases,drill:bDrill,quiz:bQuiz,cards:bCards,interview:bInterview,cheat:bCheat};
+
+/* ---------- status per page ---------- */
+function status(id){
+ if(doneMap()[id])return["Пройдено","green"];
+ if(id==="plan"){const n=store.get("plan",[]).filter(Boolean).length;return n?[`${n}/${PLAN.length}`,"yellow"]:["Не почато","gray"]}
+ if(id==="quiz"){const b=store.get("quizBest",null);return b!==null?[`Найкраще ${b}/${QUIZ.length}`,"yellow"]:["Не почато","gray"]}
+ if(id==="cards"){const n=Object.values(store.get("known",{})).filter(Boolean).length;return n?[`Знаю ${n}/${GL.length}`,"yellow"]:["Не почато","gray"]}
+ if(id==="drill"){const b=store.get("bestStreak",0);return b?[`Рекорд ${b}`,"yellow"]:["Не почато","gray"]}
+ return["Не почато","gray"];
+}
+
+/* ---------- shell rendering ---------- */
+let cur="plan";
+function renderTree(){
+ const dm=doneMap();let html="",g="";
+ PAGES.forEach(p=>{if(p.grp!==g){g=p.grp;html+=`<div class="grp">${g}</div>`}html+=`<button class="pg" data-page="${p.id}" ${p.id===cur?'aria-current="page"':""}><span class="ic">${p.ic}</span><span class="nm">${p.name}</span>${dm[p.id]?'<span class="dn">✓</span>':""}</button>`});
+ $("#tree").innerHTML=html;
+ const n=PAGES.filter(p=>dm[p.id]).length;$("#doneN").textContent=n;$("#doneT").textContent=PAGES.length;$("#doneBar").style.width=n/PAGES.length*100+"%";
+}
+function renderPage(scroll=true){
+ const p=P[cur],i=PAGES.indexOf(p),st=status(cur),dn=!!doneMap()[cur];
+ $("#crumb").innerHTML=`<span class="muted">Підготовка</span><span class="sep">/</span><span>${p.ic} ${p.name}</span>`;
+ const prev=PAGES[i-1],next=PAGES[i+1];
+ $("#page").innerHTML=`<div class="p-icon" aria-hidden="true">${p.ic}</div><h1 class="p-title">${p.name}</h1>
+ <div class="props">
+  <div class="prop"><span class="k">◷ Час</span><span class="v">${p.time}</span></div>
+  <div class="prop"><span class="k">◉ Тип</span><span class="v"><span class="tag ${p.type[1]}">${p.type[0]}</span></span></div>
+  <div class="prop"><span class="k">◎ Статус</span><span class="v"><span class="tag ${st[1]}">${st[0]}</span><button class="donebtn" id="doneBtn" aria-pressed="${dn}">${dn?"✓ Пройдено":"Позначити пройденою"}</button></span></div>
+ </div>
+ <div class="blocks">${BODY[cur]()}</div>
+ <div class="pn">${prev?`<button data-page="${prev.id}"><small>← Назад</small><span>${prev.ic} ${prev.name}</span></button>`:""}${next?`<button class="nx" data-page="${next.id}"><small>Далі →</small><span>${next.ic} ${next.name}</span></button>`:""}</div>
+ <footer class="ft">Дані про вакансію: Djinni, Tech4You, Account Manager. Орієнтири метрик приблизні й залежать від ніші та гео. Прогрес зберігається у вашому браузері.</footer>`;
+ if(cur==="gloss")fillGloss();
+ if(cur==="formulas")calc();
+ document.title=`${p.name} · Meta Ads: підготовка`;
+ if(scroll)window.scrollTo(0,0);
+}
+function go(id,scroll=true){
+ if(!P[id])return;cur=id;store.set("tab",id);
+ try{history.replaceState(null,"","#"+id)}catch(e){}
+ document.body.classList.remove("nav-open");closePeek();
+ renderTree();renderPage(scroll);
+}
+function rerender(){renderTree();renderPage(false)}
+
+/* ---------- quick find ---------- */
+let qfSel=0,qfRes=[];
+function qfIndex(){
+ const r=PAGES.map(p=>({ic:p.ic,t:p.name,sub:"Сторінка",go:()=>go(p.id)}));
+ GL.forEach((g,i)=>r.push({ic:"📖",t:`${g.t} — ${g.ua}`,sub:"Словник",txt:g.s,go:()=>{go("gloss");openPeek(i)}}));
+ CASES.forEach(c=>r.push({ic:"🧩",t:c.t,sub:"Кейс",txt:c.steps.join(" "),go:()=>go("cases")}));
+ IQ.forEach(x=>r.push({ic:"💬",t:x.q,sub:"Співбесіда",txt:x.a,go:()=>go("interview")}));
+ return r;
+}
+const QFI=()=>window._qfi||(window._qfi=qfIndex());
+function qfRender(){
+ const q=$("#qfIn").value.trim().toLowerCase();
+ qfRes=(q?QFI().filter(x=>(x.t+" "+(x.txt||"")).toLowerCase().includes(q)):QFI().filter(x=>x.sub==="Сторінка")).slice(0,40);
+ if(qfSel>=qfRes.length)qfSel=0;
+ $("#qfList").innerHTML=qfRes.length?qfRes.map((x,k)=>`<button class="qf-it" data-qf="${k}" aria-selected="${k===qfSel}"><span>${x.ic}</span><span class="ttl">${x.t}</span><small>${x.sub}</small></button>`).join(""):`<div class="qf-empty">Нічого не знайдено</div>`;
+}
+function qfOpen(){$("#qf").classList.add("on");$("#qfIn").value="";qfSel=0;qfRender();$("#qfIn").focus()}
+function qfClose(){$("#qf").classList.remove("on")}
+
+/* ---------- theme ---------- */
+function applyTheme(){const t=store.get("theme",null);if(t)document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");$("#themeLbl").textContent=t==="dark"?"Темна":t==="light"?"Світла":"Авто"}
+$("#themeBtn").onclick=()=>{const t=store.get("theme",null);store.set("theme",t===null?"dark":t==="dark"?"light":null);applyTheme()};
+
+/* ---------- events ---------- */
+document.addEventListener("click",e=>{
+ const t=e.target;
+ if(t.closest("#qf")&&!t.closest(".qf-box")){qfClose();return}
+ const qi=t.closest("[data-qf]");if(qi){const x=qfRes[+qi.dataset.qf];qfClose();x.go();return}
+ const pg=t.closest("[data-page]");if(pg){go(pg.dataset.page);return}
+ if(t.closest("#menuBtn")){document.body.classList.toggle("nav-open");return}
+ if(t.closest("#scrim")){document.body.classList.remove("nav-open");return}
+ if(t.closest("#qfBtn")){qfOpen();return}
+ if(t.closest("#peekClose")){closePeek();return}
+ if(t.closest("#peekPrev")){stepPeek(-1);return}
+ if(t.closest("#peekNext")){stepPeek(1);return}
+ if(t.id==="doneBtn"){const d=doneMap();d[cur]=!d[cur];store.set("done",d);rerender();return}
+ const term=t.closest("[data-term]");if(term){openPeek(+term.dataset.term);return}
+ const vw=t.closest("[data-view]");if(vw){gl.view=vw.dataset.view;store.set("glView",gl.view);document.querySelectorAll("[data-view]").forEach(b=>b.setAttribute("aria-pressed",b===vw));fillGloss();return}
+ const cat=t.closest("[data-cat]");if(cat){gl.cat=cat.dataset.cat;document.querySelectorAll("[data-cat]").forEach(c=>c.setAttribute("aria-pressed",c===cat));fillGloss();return}
+ const opt=t.closest(".q-opt");if(opt&&!quiz.answered){
+  quiz.answered=true;const Q=QUIZ[quiz.order[quiz.i]];const k=+opt.dataset.k;
+  document.querySelectorAll(".q-opt").forEach(b=>{const kk=+b.dataset.k;if(kk===Q.a)b.classList.add("right");else if(kk===k)b.classList.add("wrong");b.disabled=true});
+  if(k===Q.a)quiz.score++;
+  $("#q-after").innerHTML=`<div class="callout ${k===Q.a?"green":"red"}" style="margin-top:8px"><span class="ci">${k===Q.a?"✅":"❌"}</span><div><p><b>${k===Q.a?"Правильно.":"Неправильно."}</b> ${Q.e}</p></div></div><button class="btn pri" id="q-next" style="align-self:flex-start;margin-top:6px">${quiz.i+1<QUIZ.length?"Далі":"Результат"}</button>`;
+  $("#q-next").focus();return}
+ if(t.id==="q-next"){quiz.i++;quiz.answered=false;if(quiz.i>=quiz.order.length){const b=store.get("quizBest",null);if(b===null||quiz.score>b)store.set("quizBest",quiz.score)}rerender();return}
+ if(t.id==="quiz-restart"){startQuiz();rerender();return}
+ if(t.closest("#fc")){cards.flip=!cards.flip;$("#fc").classList.toggle("flip",cards.flip);return}
+ const mode=t.closest("[data-mode]");if(mode){cards.mode=mode.dataset.mode;cards.i=0;cards.flip=false;rerender();return}
+ if(t.id==="fc-next"||t.id==="fc-prev"){const d=cardDeck().length;cards.i=(cards.i+(t.id==="fc-next"?1:d-1))%Math.max(d,1);cards.flip=false;rerender();return}
+ if(t.id==="fc-know"||t.id==="fc-learn"){const deck=cardDeck();const g=deck[cards.i];const known=store.get("known",{});known[g.i]=t.id==="fc-know";store.set("known",known);if(cards.mode==="all"||t.id==="fc-learn")cards.i=(cards.i+1)%deck.length;cards.flip=false;rerender();return}
+ if(t.id==="fc-reset"){store.set("known",{});cards.i=0;rerender();return}
+ if(t.id==="drill-skip"){genDrill();rerender();return}
+});
+document.addEventListener("keydown",e=>{
+ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();$("#qf").classList.contains("on")?qfClose():qfOpen();return}
+ if($("#qf").classList.contains("on")){
+  if(e.key==="Escape"){qfClose();return}
+  if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();if(!qfRes.length)return;qfSel=(qfSel+(e.key==="ArrowDown"?1:-1)+qfRes.length)%qfRes.length;qfRender();const s=$(`[data-qf="${qfSel}"]`);if(s)s.scrollIntoView({block:"nearest"});return}
+  if(e.key==="Enter"){e.preventDefault();const x=qfRes[qfSel];if(x){qfClose();x.go()}return}
+  return}
+ if(e.key==="Escape"&&peekI!==null){closePeek();return}
+ if(peekI!==null&&(e.key==="ArrowDown"||e.key==="ArrowUp")&&!e.target.closest("input")){e.preventDefault();stepPeek(e.key==="ArrowDown"?1:-1);return}
+ if(e.target.id==="fc"&&(e.key==="Enter"||e.key===" ")){e.preventDefault();e.target.click();return}
+ if(e.target.matches&&e.target.matches("tr.dbrow")&&e.key==="Enter"){openPeek(+e.target.dataset.term)}
+});
+document.addEventListener("change",e=>{
+ const p=e.target.closest("[data-plan]");if(p){const d=store.get("plan",[]);d[+p.dataset.plan]=p.checked;store.set("plan",d);rerender();return}
+ const a=e.target.closest("[data-ask]");if(a){const d=store.get("ask",[]);d[+a.dataset.ask]=a.checked;store.set("ask",d)}
+});
+document.addEventListener("input",e=>{
+ if(e.target.id==="gl-search"){gl.q=e.target.value;fillGloss()}
+ if(e.target.id==="qfIn"){qfSel=0;qfRender()}
+ if(e.target.closest(".calc"))calc();
+});
+document.addEventListener("submit",e=>{
+ if(e.target.id!=="drill-form")return;e.preventDefault();
+ const v=parseFloat($("#drill-in").value.replace(/\s/g,"").replace(",",".").replace(/[$%]/g,""));
+ const fb=()=>$("#drill-fb");
+ if(!isFinite(v)){fb().textContent="Введіть число.";fb().className="fb no";return}
+ const a=drill.q.ans,ok=Math.abs(v-a)<=Math.abs(a)*0.02+0.005;
+ const shown=(drill.q.unit==="$"?"$":"")+fmt(a)+(drill.q.unit==="%"?"%":"");
+ if(ok){drill.streak++;if(drill.streak>drill.best){drill.best=drill.streak;store.set("bestStreak",drill.best)}store.set("streak",drill.streak);genDrill();rerender();fb().textContent=`Правильно: ${shown}. Наступна задача вище.`;fb().className="fb ok";$("#drill-in").focus()}
+ else{drill.streak=0;store.set("streak",0);fb().textContent=`Ні. Правильно: ${shown}. Натисніть «Інша задача».`;fb().className="fb no"}
+});
+
+/* ---------- boot ---------- */
+applyTheme();
+let start=(location.hash||"").slice(1);if(!P[start])start=store.get("tab","plan");if(!P[start])start="plan";
+go(start,false);
+</script>
+</body>
+</html>
