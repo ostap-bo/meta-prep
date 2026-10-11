@@ -76,6 +76,8 @@ a{color:inherit;text-decoration:underline;text-decoration-color:var(--faint);tex
 .ibtn:hover{background:var(--hover)}
 #menuBtn{display:none}
 .page{max-width:760px;margin:0 auto;padding-inline:max(16px,4vw);padding-block:28px 120px}
+body.wide .page{max-width:none;padding-inline:clamp(16px,4vw,72px)}
+body.wide p{max-width:none}
 @media (max-width:900px){
   .side{transform:translateX(-100%);box-shadow:var(--shadow)}
   body.nav-open .side{transform:none}
@@ -246,6 +248,7 @@ footer.ft{margin-top:30px;color:var(--faint);font-size:12px}
       <button class="ibtn" id="menuBtn" type="button" aria-label="Меню">☰</button>
       <div class="crumb" id="crumb"></div>
       <div class="sp"></div>
+      <button class="ibtn" id="wideBtn" type="button" aria-pressed="true">↔ <span id="wideLbl">На всю ширину</span></button>
       <button class="ibtn" id="themeBtn" type="button" aria-label="Змінити тему">◐ <span id="themeLbl">Тема</span></button>
     </header>
     <main class="page" id="page"></main>
@@ -855,6 +858,10 @@ function qfClose(){$("#qf").classList.remove("on")}
 function applyTheme(){const t=store.get("theme",null);if(t)document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");$("#themeLbl").textContent=t==="dark"?"Темна":t==="light"?"Світла":"Авто"}
 $("#themeBtn").onclick=()=>{const t=store.get("theme",null);store.set("theme",t===null?"dark":t==="dark"?"light":null);applyTheme()};
 
+/* ---------- width ---------- */
+function applyWide(){const w=store.get("wide",true);document.body.classList.toggle("wide",w);$("#wideBtn").setAttribute("aria-pressed",w);$("#wideLbl").textContent=w?"На всю ширину":"Вузько"}
+$("#wideBtn").onclick=()=>{store.set("wide",!store.get("wide",true));applyWide()};
+
 /* ---------- events ---------- */
 document.addEventListener("click",e=>{
  const t=e.target;
@@ -919,7 +926,7 @@ document.addEventListener("submit",e=>{
 });
 
 /* ---------- boot ---------- */
-applyTheme();
+applyTheme();applyWide();
 let start=(location.hash||"").slice(1);if(!P[start])start=store.get("tab","plan");if(!P[start])start="plan";
 go(start,false);
 </script>
